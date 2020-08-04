@@ -11,23 +11,22 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 class PlayerMovementComponent : Component() {
-    val forwardThruster = object: UserAction("ForwardThruster") {
-        override fun onActionBegin() = moveUp()
-        override fun onActionEnd() = stopMoveUp()
+    val forwardThruster = object : UserAction("ForwardThruster") {
+        override fun onActionBegin() = run { currentDirection = Point2D(currentDirection.x, UP.y) }
+        override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
     }
-    val rightThruster = object: UserAction("RightThruster") {
-        override fun onActionBegin() = moveRight()
-        override fun onActionEnd() = stopMoveRight()
+    val rightThruster = object : UserAction("RightThruster") {
+        override fun onActionBegin() = run { currentDirection = Point2D(RIGHT.x, currentDirection.y) }
+        override fun onActionEnd() = run { currentDirection = Point2D(0.0, currentDirection.y) }
     }
-    val leftThruster = object: UserAction("LeftThruster") {
-        override fun onActionBegin() = moveLeft()
-        override fun onActionEnd() = stopMoveLeft()
+    val leftThruster = object : UserAction("LeftThruster") {
+        override fun onActionBegin() = run { currentDirection = Point2D(LEFT.x, currentDirection.y) }
+        override fun onActionEnd() = run { currentDirection = Point2D(0.0, currentDirection.y) }
     }
-    val backThruster = object: UserAction("BackThruster") {
-        override fun onActionBegin() = moveDown()
-        override fun onActionEnd() = stopMoveDown()
+    val backThruster = object : UserAction("BackThruster") {
+        override fun onActionBegin() = run { currentDirection = Point2D(currentDirection.x, DOWN.y) }
+        override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
     }
-
 
     private val maxSpeed: Double = 10.0
     private val acceleration: Double = 10.0
@@ -63,48 +62,16 @@ class PlayerMovementComponent : Component() {
                     vel + acceleration * tpf
             }
 
-    private fun getAccelVelocity(vel: Double, dir:Double, tpf: Double) =
+    private fun getAccelVelocity(vel: Double, dir: Double, tpf: Double) =
             if (abs(vel + dir * acceleration * tpf) < maxSpeed)
                 vel + dir * acceleration * tpf
             else
                 sign(dir) * maxSpeed
 
     override fun onUpdate(tpf: Double) {
-
         val velocity = getVelocity(tpf)
         currentVelocity = velocity
+
         getEntity().translate(velocity)
-    }
-
-    fun moveLeft() {
-        currentDirection = Point2D(LEFT.x, currentDirection.y)
-    }
-
-    fun stopMoveLeft() {
-        currentDirection = Point2D(0.0, currentDirection.y)
-    }
-
-    fun moveRight() {
-        currentDirection = Point2D(RIGHT.x, currentDirection.y)
-    }
-
-    fun stopMoveRight() {
-        currentDirection = Point2D(0.0, currentDirection.y)
-    }
-
-    fun moveUp() {
-        currentDirection = Point2D(currentDirection.x, UP.y)
-    }
-
-    fun stopMoveUp() {
-        currentDirection = Point2D(currentDirection.x, 0.0)
-    }
-
-    fun moveDown() {
-        currentDirection = Point2D(currentDirection.x, DOWN.y)
-    }
-
-    fun stopMoveDown() {
-        currentDirection = Point2D(currentDirection.x, 0.0)
     }
 }

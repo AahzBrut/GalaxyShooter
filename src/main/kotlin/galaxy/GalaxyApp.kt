@@ -7,7 +7,6 @@ import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.dsl.loopBGM
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.input.UserAction
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
 import galaxy.components.PlayerMovementComponent
