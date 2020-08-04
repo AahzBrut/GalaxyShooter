@@ -13,7 +13,6 @@ class PlayerMovementComponent : Component() {
 
     private val maxSpeed: Double = 10.0
     private val acceleration: Double = 10.0
-    val fireSpeed: Double = 1.0
 
     private var currentDirection: Point2D = Point2D.ZERO
     private var currentVelocity: Point2D = Point2D.ZERO
