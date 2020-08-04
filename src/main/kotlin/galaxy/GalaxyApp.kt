@@ -38,35 +38,17 @@ class GalaxyApp : GameApplication() {
         spawnEntityType(BACKGROUND)
         player = spawnEntityType(PLAYER)
         playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
+
+        initPlayerInput()
     }
 
-    override fun initInput() {
+    private fun initPlayerInput() {
         val input = getInput()
 
-        val forwardThruster = object: UserAction("ForwardThruster") {
-            override fun onActionBegin() = playerMovementComponent.moveUp()
-            override fun onActionEnd() = playerMovementComponent.stopMoveUp()
-        }
-
-        val rightThruster = object: UserAction("RightThruster") {
-            override fun onActionBegin() = playerMovementComponent.moveRight()
-            override fun onActionEnd() = playerMovementComponent.stopMoveRight()
-        }
-
-        val leftThruster = object: UserAction("LeftThruster") {
-            override fun onActionBegin() = playerMovementComponent.moveLeft()
-            override fun onActionEnd() = playerMovementComponent.stopMoveLeft()
-        }
-
-        val backThruster = object: UserAction("BackThruster") {
-            override fun onActionBegin() = playerMovementComponent.moveDown()
-            override fun onActionEnd() = playerMovementComponent.stopMoveDown()
-        }
-
-        input.addAction(forwardThruster, KeyCode.W)
-        input.addAction(rightThruster, KeyCode.D)
-        input.addAction(leftThruster, KeyCode.A)
-        input.addAction(backThruster, KeyCode.S)
+        input.addAction(playerMovementComponent.forwardThruster, KeyCode.W)
+        input.addAction(playerMovementComponent.rightThruster, KeyCode.D)
+        input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
+        input.addAction(playerMovementComponent.backThruster, KeyCode.S)
     }
 
     companion object {

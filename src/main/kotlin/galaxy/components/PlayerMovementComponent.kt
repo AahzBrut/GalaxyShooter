@@ -11,6 +11,23 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 class PlayerMovementComponent : Component() {
+    val forwardThruster = object: UserAction("ForwardThruster") {
+        override fun onActionBegin() = moveUp()
+        override fun onActionEnd() = stopMoveUp()
+    }
+    val rightThruster = object: UserAction("RightThruster") {
+        override fun onActionBegin() = moveRight()
+        override fun onActionEnd() = stopMoveRight()
+    }
+    val leftThruster = object: UserAction("LeftThruster") {
+        override fun onActionBegin() = moveLeft()
+        override fun onActionEnd() = stopMoveLeft()
+    }
+    val backThruster = object: UserAction("BackThruster") {
+        override fun onActionBegin() = moveDown()
+        override fun onActionEnd() = stopMoveDown()
+    }
+
 
     private val maxSpeed: Double = 10.0
     private val acceleration: Double = 10.0
