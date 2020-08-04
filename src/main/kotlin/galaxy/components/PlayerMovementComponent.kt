@@ -1,6 +1,7 @@
 package galaxy.components
 
 import com.almasb.fxgl.entity.component.Component
+import com.almasb.fxgl.input.UserAction
 import galaxy.DOWN
 import galaxy.LEFT
 import galaxy.RIGHT
@@ -22,10 +23,14 @@ class PlayerMovementComponent : Component() {
         val dx = if (currentDirection.x == 0.0) {
             getDecelVelocity(currentVelocity.x, tpf)
         } else {
-            getAccelVelocity(currentVelocity.x, tpf)
+            getAccelVelocity(currentVelocity.x, currentDirection.x, tpf)
         }
-        println(dx)
-        return Point2D(dx, 0.0)
+        val dy = if (currentDirection.y == 0.0) {
+            getDecelVelocity(currentVelocity.y, tpf)
+        } else {
+            getAccelVelocity(currentVelocity.y, currentDirection.y, tpf)
+        }
+        return Point2D(dx, dy)
     }
 
     private fun getDecelVelocity(vel: Double, tpf: Double) =
@@ -41,11 +46,11 @@ class PlayerMovementComponent : Component() {
                     vel + acceleration * tpf
             }
 
-    private fun getAccelVelocity(vel: Double, tpf: Double) =
-            if (abs(vel + currentDirection.x * acceleration * tpf) < maxSpeed)
-                vel + currentDirection.x * acceleration * tpf
+    private fun getAccelVelocity(vel: Double, dir:Double, tpf: Double) =
+            if (abs(vel + dir * acceleration * tpf) < maxSpeed)
+                vel + dir * acceleration * tpf
             else
-                sign(currentDirection.x) * maxSpeed
+                sign(dir) * maxSpeed
 
     override fun onUpdate(tpf: Double) {
 
@@ -71,12 +76,10 @@ class PlayerMovementComponent : Component() {
     }
 
     fun moveUp() {
-        println("Start moving up")
         currentDirection = Point2D(currentDirection.x, UP.y)
     }
 
     fun stopMoveUp() {
-        println("Stop moving up")
         currentDirection = Point2D(currentDirection.x, 0.0)
     }
 
@@ -85,6 +88,6 @@ class PlayerMovementComponent : Component() {
     }
 
     fun stopMoveDown() {
-        currentDirection = Point2D(currentDirection.x, DOWN.y)
+        currentDirection = Point2D(currentDirection.x, 0.0)
     }
 }

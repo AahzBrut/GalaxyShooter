@@ -6,8 +6,6 @@ import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.dsl.getSettings
 import com.almasb.fxgl.dsl.loopBGM
-import com.almasb.fxgl.dsl.onKeyDown
-import com.almasb.fxgl.dsl.onKeyUp
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.UserAction
 import galaxy.GalaxyEntityType.BACKGROUND
@@ -60,9 +58,15 @@ class GalaxyApp : GameApplication() {
             override fun onActionEnd() = playerMovementComponent.stopMoveLeft()
         }
 
+        val backThruster = object: UserAction("BackThruster") {
+            override fun onActionBegin() = playerMovementComponent.moveDown()
+            override fun onActionEnd() = playerMovementComponent.stopMoveDown()
+        }
+
         input.addAction(forwardThruster, KeyCode.W)
         input.addAction(rightThruster, KeyCode.D)
         input.addAction(leftThruster, KeyCode.A)
+        input.addAction(backThruster, KeyCode.S)
     }
 
     companion object {
