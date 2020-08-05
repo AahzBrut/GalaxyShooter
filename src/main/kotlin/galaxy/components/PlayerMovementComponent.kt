@@ -77,9 +77,9 @@ class PlayerMovementComponent : Component() {
     }
 
     private fun checkBounds() {
-        val upperBound = -entity.height
+        val upperBound = -60.0
         val lowerBound = getAppHeight().toDouble()
-        val leftBound = -entity.width
+        val leftBound = -60.0
         val rightBound  = getAppWidth().toDouble()
 
         if (entity.position.x + currentVelocity.x < leftBound)
@@ -94,4 +94,6 @@ class PlayerMovementComponent : Component() {
         if (entity.position.y + currentVelocity.y > lowerBound)
             entity.position = Point2D(entity.position.x, upperBound)
     }
+
+    override fun isComponentInjectionRequired() = false
 }
