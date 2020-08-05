@@ -1,5 +1,7 @@
 package galaxy.components
 
+import com.almasb.fxgl.dsl.getAppHeight
+import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.input.UserAction
 import galaxy.DOWN
@@ -69,9 +71,27 @@ class PlayerMovementComponent : Component() {
                 sign(dir) * maxSpeed
 
     override fun onUpdate(tpf: Double) {
-        val velocity = getVelocity(tpf)
-        currentVelocity = velocity
+        currentVelocity = getVelocity(tpf)
+        checkBounds()
+        entity.translate(currentVelocity)
+    }
 
-        getEntity().translate(velocity)
+    private fun checkBounds() {
+        val upperBound = -entity.height
+        val lowerBound = getAppHeight().toDouble()
+        val leftBound = -entity.width
+        val rightBound  = getAppWidth().toDouble()
+
+        if (entity.position.x + currentVelocity.x < leftBound)
+            entity.position = Point2D(rightBound, entity.position.y)
+
+        if (entity.position.x + currentVelocity.x > rightBound)
+            entity.position = Point2D(leftBound, entity.position.y)
+
+        if (entity.position.y + currentVelocity.y < upperBound)
+            entity.position = Point2D(entity.position.x, lowerBound)
+
+        if (entity.position.y + currentVelocity.y > lowerBound)
+            entity.position = Point2D(entity.position.x, upperBound)
     }
 }
