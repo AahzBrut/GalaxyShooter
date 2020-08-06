@@ -9,7 +9,6 @@ import com.almasb.fxgl.dsl.loopBGM
 import com.almasb.fxgl.entity.Entity
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
-import galaxy.components.PlayerAnimationComponent
 import galaxy.components.PlayerMovementComponent
 import javafx.scene.input.KeyCode
 

@@ -1,18 +1,14 @@
 package galaxy
 
 import com.almasb.fxgl.dsl.entityBuilder
-import com.almasb.fxgl.dsl.getAppHeight
-import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.getGameScene
 import com.almasb.fxgl.dsl.texture
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
-import com.almasb.fxgl.entity.components.BoundingBoxComponent
 import com.almasb.fxgl.entity.components.CollidableComponent
-import com.almasb.fxgl.texture.Texture
-import galaxy.components.PlayerAnimationComponent
+import galaxy.components.PlayerRollAnimationComponent
 import galaxy.components.PlayerMovementComponent
 import javafx.scene.paint.Color
 
@@ -40,7 +36,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .type(GalaxyEntityType.PLAYER)
                 .with(CollidableComponent(true))
                 .with(PlayerMovementComponent())
-                .with(PlayerAnimationComponent())
+                .with(PlayerRollAnimationComponent())
                 .build()
     }
 }
