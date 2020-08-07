@@ -2,8 +2,6 @@ package galaxy.components
 
 import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.entity.component.Component
-import com.almasb.fxgl.texture.AnimatedTexture
-import com.almasb.fxgl.texture.AnimationChannelData
 import com.almasb.fxgl.texture.Texture
 import galaxy.entities.PLAYER
 import galaxy.playerTurnLeftAnim
