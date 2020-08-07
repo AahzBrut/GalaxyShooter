@@ -2,7 +2,10 @@ package galaxy.components
 
 import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.entity.component.Component
+import com.almasb.fxgl.texture.AnimatedTexture
+import com.almasb.fxgl.texture.AnimationChannelData
 import com.almasb.fxgl.texture.Texture
+import galaxy.entities.PLAYER
 import galaxy.playerTurnLeftAnim
 import galaxy.playerTurnRightAnim
 import javafx.scene.image.Image
@@ -19,8 +22,8 @@ class PlayerRollAnimationComponent : Component() {
     override fun onAdded() {
         movementComponent = entity.getComponent(PlayerMovementComponent::class.java)
         loadTextures()
-        entity.transformComponent.scaleX = 64.0 / texture.height
-        entity.transformComponent.scaleY = 64.0 / texture.width
+        entity.transformComponent.scaleX = PLAYER.size / texture.height
+        entity.transformComponent.scaleY = PLAYER.size / texture.width
         entity.viewComponent.addChild(texture)
     }
 

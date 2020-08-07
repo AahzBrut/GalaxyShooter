@@ -8,6 +8,7 @@ import galaxy.DOWN
 import galaxy.LEFT
 import galaxy.RIGHT
 import galaxy.UP
+import galaxy.entities.PLAYER
 import javafx.geometry.Point2D
 import kotlin.math.abs
 import kotlin.math.sign
@@ -30,11 +31,11 @@ class PlayerMovementComponent : Component() {
         override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
     }
 
-    val maxSpeed: Double = 10.0
-    private val acceleration: Double = 10.0
+    private val maxSpeed: Double = PLAYER.maxSpeed
+    private val acceleration: Double = PLAYER.acceleration
 
     var currentDirection: Point2D = Point2D.ZERO
-    var currentVelocity: Point2D = Point2D.ZERO
+    private var currentVelocity: Point2D = Point2D.ZERO
 
     private fun getVelocity(tpf: Double): Point2D {
 
@@ -77,9 +78,9 @@ class PlayerMovementComponent : Component() {
     }
 
     private fun checkBounds() {
-        val upperBound = -64.0
+        val upperBound = -PLAYER.size
         val lowerBound = getAppHeight().toDouble()
-        val leftBound = -64.0
+        val leftBound = -PLAYER.size
         val rightBound  = getAppWidth().toDouble()
 
         if (entity.position.x + currentVelocity.x < leftBound)

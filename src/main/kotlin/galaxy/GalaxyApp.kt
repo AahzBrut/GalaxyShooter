@@ -15,7 +15,6 @@ import javafx.scene.input.KeyCode
 class GalaxyApp : GameApplication() {
 
     private lateinit var player: Entity
-    private lateinit var playerMovementComponent: PlayerMovementComponent
 
     override fun initSettings(settings: GameSettings) {
         settings.width = 800
@@ -36,13 +35,13 @@ class GalaxyApp : GameApplication() {
 
         spawnEntityType(BACKGROUND)
         player = spawnEntityType(PLAYER)
-        playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
 
         initPlayerInput()
     }
 
     private fun initPlayerInput() {
         val input = getInput()
+        val playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
 
         input.addAction(playerMovementComponent.forwardThruster, KeyCode.W)
         input.addAction(playerMovementComponent.rightThruster, KeyCode.D)

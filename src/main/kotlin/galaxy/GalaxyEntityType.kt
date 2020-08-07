@@ -17,7 +17,7 @@ enum class GalaxyEntityType(
     ),
     PLAYER(
             "Player",
-            "player/player.png",
+            "",
             Point2D(getAppWidth().toDouble() / 2, getAppHeight().toDouble() / 2)
     )
 }
