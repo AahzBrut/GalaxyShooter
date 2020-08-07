@@ -12,6 +12,7 @@ import galaxy.components.PlayerRollAnimationComponent
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.components.ProjectileComponent
+import galaxy.entities.LASER_BOLT
 import javafx.scene.paint.Color
 
 
@@ -51,7 +52,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .type(GalaxyEntityType.LASER_BOLT)
                 .with(CollidableComponent(true))
                 .with(ProjectileComponent())
-                .view(texture(GalaxyEntityType.LASER_BOLT.baseTexture, 15.0, 30.0))
+                .view(texture(GalaxyEntityType.LASER_BOLT.baseTexture, LASER_BOLT.size.x, LASER_BOLT.size.y))
                 .build()
     }
 }

@@ -15,7 +15,8 @@ data class Player(
 val PLAYER = Player()
 
 data class LaserBolt(
-        val speed: Double = 100.0
+        val speed: Double = 100.0,
+        val size: Point2D = Point2D(15.0,30.0)
 )
 
 val LASER_BOLT = LaserBolt()

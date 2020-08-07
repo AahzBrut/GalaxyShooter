@@ -8,7 +8,7 @@ class ProjectileComponent : Component() {
     private val speed = LASER_BOLT.speed
 
     override fun onUpdate(tpf: Double) {
-        if (entity.position.y < - 30)
+        if (entity.position.y < - LASER_BOLT.size.y)
             entity.removeFromWorld()
 
         entity.translate(0.0, -speed * tpf)
