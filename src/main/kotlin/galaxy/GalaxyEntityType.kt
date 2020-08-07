@@ -19,5 +19,10 @@ enum class GalaxyEntityType(
             "Player",
             "",
             Point2D(getAppWidth().toDouble() / 2, getAppHeight().toDouble() / 2)
+    ),
+    LASER_BOLT(
+            "LaserBolt",
+            "projectiles/laser.png",
+            Point2D(0.0,0.0)
     )
 }

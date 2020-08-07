@@ -10,6 +10,8 @@ import com.almasb.fxgl.entity.Spawns
 import com.almasb.fxgl.entity.components.CollidableComponent
 import galaxy.components.PlayerRollAnimationComponent
 import galaxy.components.PlayerMovementComponent
+import galaxy.components.PlayerWeaponComponent
+import galaxy.components.ProjectileComponent
 import javafx.scene.paint.Color
 
 
@@ -28,7 +30,7 @@ class GalaxyEntityFactory : EntityFactory {
             .build()
     }
 
-    @Suppress("UNUSED")
+    @Suppress("UNUSED", "UNUSED_PARAMETER")
     @Spawns("Player")
     fun newPlayer(data: SpawnData): Entity {
 
@@ -37,6 +39,19 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(CollidableComponent(true))
                 .with(PlayerMovementComponent())
                 .with(PlayerRollAnimationComponent())
+                .with(PlayerWeaponComponent())
+                .build()
+    }
+
+    @Suppress("UNUSED")
+    @Spawns("LaserBolt")
+    fun newProjectile(data: SpawnData): Entity {
+
+        return entityBuilder(data)
+                .type(GalaxyEntityType.LASER_BOLT)
+                .with(CollidableComponent(true))
+                .with(ProjectileComponent())
+                .view(texture(GalaxyEntityType.LASER_BOLT.baseTexture, 15.0, 30.0))
                 .build()
     }
 }

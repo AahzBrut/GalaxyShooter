@@ -12,6 +12,7 @@ val LEFT = Point2D(-1.0, 0.0)
 val RIGHT = Point2D(1.0, 0.0)
 val UP = Point2D(0.0, -1.0)
 val DOWN = Point2D(0.0, 1.0)
+const val K : Long = 1_000
 
 
 val playerTurnLeftAnim = mapOf(
@@ -35,3 +36,5 @@ val playerTurnRightAnim = mapOf(
         6 to "player/turn-right/Player Turn Right0006.png",
         7 to "player/turn-right/Player Turn Right0007.png",
         8 to "player/turn-right/Player Turn Right0008.png")
+
+const val LASER_SHOT = "laser_shot.wav"

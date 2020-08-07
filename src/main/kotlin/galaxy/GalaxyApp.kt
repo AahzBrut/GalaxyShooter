@@ -10,6 +10,7 @@ import com.almasb.fxgl.entity.Entity
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
 import galaxy.components.PlayerMovementComponent
+import galaxy.components.PlayerWeaponComponent
 import javafx.scene.input.KeyCode
 
 class GalaxyApp : GameApplication() {
@@ -42,11 +43,14 @@ class GalaxyApp : GameApplication() {
     private fun initPlayerInput() {
         val input = getInput()
         val playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
+        val weaponComponent = player.getComponent(PlayerWeaponComponent::class.java)
+
 
         input.addAction(playerMovementComponent.forwardThruster, KeyCode.W)
         input.addAction(playerMovementComponent.rightThruster, KeyCode.D)
         input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
         input.addAction(playerMovementComponent.backThruster, KeyCode.S)
+        input.addAction(weaponComponent.weaponPylon, KeyCode.SPACE)
     }
 
     companion object {
