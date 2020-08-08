@@ -7,8 +7,9 @@ data class Player(
         val size: Double = 64.0,
         val maxSpeed: Double = 10.0,
         val acceleration: Double = 10.0,
-        val firingDelay: Double = .5,
-        val projectileSpeed: Double = 20.0,
+        val rollSpeed: Double = .3,                             // time in seconds to fully roll in one direction
+        val firingDelay: Double = .5,                           // cooldown between shots in seconds
+        val projectileSpeed: Double = 40.0,
         val mainWeaponPos: Point2D = Point2D(24.0, -20.0)
 )
 
