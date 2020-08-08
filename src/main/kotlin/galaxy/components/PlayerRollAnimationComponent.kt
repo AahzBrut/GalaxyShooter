@@ -44,9 +44,8 @@ class PlayerRollAnimationComponent : Component() {
 
         rollAngle += curDirection * tpf * maxRoll / rollSpeed
         rollAngle = if (abs(rollAngle).toInt() > maxRoll) sign(rollAngle) * maxRoll else rollAngle
-        val result = rollAngle.toInt() + maxRoll
 
-        return result
+        return rollAngle.toInt() + maxRoll
     }
 
     override fun isComponentInjectionRequired() = false

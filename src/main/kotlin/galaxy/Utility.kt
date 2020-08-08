@@ -37,4 +37,25 @@ val playerTurnRightAnim = mapOf(
         7 to "player/turn-right/Player Turn Right0007.png",
         8 to "player/turn-right/Player Turn Right0008.png")
 
-const val LASER_SHOT = "laser_shot.wav"
+val playerThrusterAnim = listOf(
+        "player/thruster/Thruster_00000.png",
+        "player/thruster/Thruster_00001.png",
+        "player/thruster/Thruster_00002.png",
+        "player/thruster/Thruster_00003.png",
+        "player/thruster/Thruster_00004.png",
+        "player/thruster/Thruster_00005.png",
+        "player/thruster/Thruster_00006.png",
+        "player/thruster/Thruster_00007.png",
+        "player/thruster/Thruster_00008.png",
+        "player/thruster/Thruster_00009.png",
+        "player/thruster/Thruster_00010.png",
+        "player/thruster/Thruster_00011.png",
+        "player/thruster/Thruster_00012.png",
+        "player/thruster/Thruster_00013.png",
+        "player/thruster/Thruster_00014.png",
+        "player/thruster/Thruster_00015.png",
+        "player/thruster/Thruster_00016.png",
+        "player/thruster/Thruster_00017.png",
+        "player/thruster/Thruster_00018.png",
+        "player/thruster/Thruster_00019.png",
+        "player/thruster/Thruster_00020.png")
