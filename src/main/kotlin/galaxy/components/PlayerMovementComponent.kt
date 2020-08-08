@@ -73,26 +73,26 @@ class PlayerMovementComponent : Component() {
 
     override fun onUpdate(tpf: Double) {
         currentVelocity = getVelocity(tpf)
-        checkBounds()
-        entity.translate(currentVelocity)
+        checkBounds(currentVelocity.multiply(tpf))
+        entity.translate(currentVelocity.multiply(tpf))
     }
 
-    private fun checkBounds() {
+    private fun checkBounds(velocity: Point2D) {
         val upperBound = -PLAYER.size
         val lowerBound = getAppHeight().toDouble()
         val leftBound = -PLAYER.size
-        val rightBound  = getAppWidth().toDouble()
+        val rightBound = getAppWidth().toDouble()
 
-        if (entity.position.x + currentVelocity.x < leftBound)
+        if (entity.position.x + velocity.x < leftBound)
             entity.position = Point2D(rightBound, entity.position.y)
 
-        if (entity.position.x + currentVelocity.x > rightBound)
+        if (entity.position.x + velocity.x > rightBound)
             entity.position = Point2D(leftBound, entity.position.y)
 
-        if (entity.position.y + currentVelocity.y < upperBound)
+        if (entity.position.y + velocity.y < upperBound)
             entity.position = Point2D(entity.position.x, lowerBound)
 
-        if (entity.position.y + currentVelocity.y > lowerBound)
+        if (entity.position.y + velocity.y > lowerBound)
             entity.position = Point2D(entity.position.x, upperBound)
     }
 

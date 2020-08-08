@@ -8,10 +8,7 @@ import com.almasb.fxgl.entity.EntityFactory
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import com.almasb.fxgl.entity.components.CollidableComponent
-import galaxy.components.PlayerRollAnimationComponent
-import galaxy.components.PlayerMovementComponent
-import galaxy.components.PlayerWeaponComponent
-import galaxy.components.ProjectileComponent
+import galaxy.components.*
 import galaxy.entities.LASER_BOLT
 import javafx.scene.paint.Color
 
@@ -40,6 +37,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(CollidableComponent(true))
                 .with(PlayerMovementComponent())
                 .with(PlayerRollAnimationComponent())
+                .with(PlayerThrusterAnimationComponent())
                 .with(PlayerWeaponComponent())
                 .build()
     }

@@ -5,7 +5,7 @@ import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.input.UserAction
 import galaxy.K
-import galaxy.LASER_SHOT
+import galaxy.entities.LASER_BOLT
 import galaxy.entities.PLAYER
 
 class PlayerWeaponComponent : Component() {
@@ -21,7 +21,7 @@ class PlayerWeaponComponent : Component() {
         if (currentTime - lastShotFired <= PLAYER.firingDelay * K) return
 
         lastShotFired = currentTime
-        play(LASER_SHOT)
+        play(LASER_BOLT.shotSound)
         spawn("LaserBolt", entity.transformComponent.position.add(PLAYER.mainWeaponPos))
     }
 
