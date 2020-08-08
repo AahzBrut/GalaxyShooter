@@ -50,7 +50,7 @@ class GalaxyApp : GameApplication() {
         input.addAction(playerMovementComponent.rightThruster, KeyCode.D)
         input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
         input.addAction(playerMovementComponent.backThruster, KeyCode.S)
-        input.addAction(weaponComponent.weaponPylon, KeyCode.SPACE)
+        input.addAction(weaponComponent.weaponTrigger, KeyCode.SPACE)
     }
 
     companion object {

@@ -10,7 +10,7 @@ import galaxy.entities.PLAYER
 
 class PlayerWeaponComponent : Component() {
 
-    val weaponPylon = object : UserAction("WeaponPylon") {
+    val weaponTrigger = object : UserAction("WeaponTrigger") {
         override fun onAction() = run { shoot() }
     }
 
