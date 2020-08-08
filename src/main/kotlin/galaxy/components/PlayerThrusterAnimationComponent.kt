@@ -11,12 +11,10 @@ import javafx.util.Duration
 class PlayerThrusterAnimationComponent : Component() {
 
     private val images = mutableListOf<Image>()
-    private lateinit var movementComponent: PlayerMovementComponent
     private lateinit var texture: AnimatedTexture
 
 
     override fun onAdded() {
-        movementComponent = entity.getComponent(PlayerMovementComponent::class.java)
         images.addAll(playerThrusterAnim.map{ item -> image(item) })
         val channel = AnimationChannel(images, Duration.seconds(1.0))
         texture = AnimatedTexture(channel)
