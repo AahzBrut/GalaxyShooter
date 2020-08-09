@@ -59,3 +59,5 @@ val playerThrusterAnim = listOf(
         "player/thruster/Thruster_00018.png",
         "player/thruster/Thruster_00019.png",
         "player/thruster/Thruster_00020.png")
+
+val enemyTexture = "player/turn-left/Player Turn Left0000.png"

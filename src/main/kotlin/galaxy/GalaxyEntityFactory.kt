@@ -9,6 +9,7 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import com.almasb.fxgl.entity.components.CollidableComponent
 import galaxy.components.*
+import galaxy.entities.ENEMY
 import galaxy.entities.LASER_BOLT
 import javafx.scene.paint.Color
 
@@ -51,6 +52,18 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(CollidableComponent(true))
                 .with(ProjectileComponent())
                 .view(texture(GalaxyEntityType.LASER_BOLT.baseTexture, LASER_BOLT.size.x, LASER_BOLT.size.y))
+                .build()
+    }
+
+    @Suppress("UNUSED", "UNUSED_PARAMETER")
+    @Spawns("Enemy")
+    fun newEnemy(data: SpawnData): Entity {
+
+        val enemyTexture = texture(GalaxyEntityType.ENEMY.baseTexture, ENEMY.size, ENEMY.size)
+        enemyTexture.rotate = 180.0
+        return entityBuilder(SpawnData(100.0, 100.0))
+                .type(GalaxyEntityType.ENEMY)
+                .view(enemyTexture)
                 .build()
     }
 }

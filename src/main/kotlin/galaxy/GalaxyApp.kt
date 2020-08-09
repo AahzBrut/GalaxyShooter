@@ -2,20 +2,19 @@ package galaxy
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.dsl.getInput
-import com.almasb.fxgl.dsl.getSettings
-import com.almasb.fxgl.dsl.loopBGM
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
+import galaxy.controllers.EnemyController
 import javafx.scene.input.KeyCode
 
 class GalaxyApp : GameApplication() {
 
     private lateinit var player: Entity
+    private lateinit var enemyController: EnemyController
 
     override fun initSettings(settings: GameSettings) {
         settings.width = 800
@@ -36,8 +35,8 @@ class GalaxyApp : GameApplication() {
 
         spawnEntityType(BACKGROUND)
         player = spawnEntityType(PLAYER)
-
         initPlayerInput()
+        enemyController = EnemyController(newLocalTimer())
     }
 
     private fun initPlayerInput() {
@@ -51,6 +50,10 @@ class GalaxyApp : GameApplication() {
         input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
         input.addAction(playerMovementComponent.backThruster, KeyCode.S)
         input.addAction(weaponComponent.weaponTrigger, KeyCode.SPACE)
+    }
+
+    override fun onUpdate(tpf: Double) {
+        enemyController.spawnEnemies(tpf)
     }
 
     companion object {
