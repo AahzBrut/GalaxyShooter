@@ -5,7 +5,6 @@ import com.almasb.fxgl.dsl.play
 import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.input.UserAction
-import galaxy.K
 import galaxy.entities.LASER_BOLT
 import galaxy.entities.PLAYER
 import javafx.util.Duration
