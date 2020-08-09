@@ -1,12 +1,13 @@
 package galaxy.components
 
+import com.almasb.fxgl.dsl.newLocalTimer
 import com.almasb.fxgl.dsl.play
 import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.input.UserAction
-import galaxy.K
 import galaxy.entities.LASER_BOLT
 import galaxy.entities.PLAYER
+import javafx.util.Duration
 
 class PlayerWeaponComponent : Component() {
 
@@ -14,13 +15,12 @@ class PlayerWeaponComponent : Component() {
         override fun onAction() = run { shoot() }
     }
 
-    private var lastShotFired: Long = System.currentTimeMillis()
+    private val cooldownTimer = newLocalTimer()
 
     private fun shoot(){
-        val currentTime = System.currentTimeMillis()
-        if (currentTime - lastShotFired <= PLAYER.firingDelay * K) return
+        if (!cooldownTimer.elapsed(Duration.seconds(PLAYER.firingDelay))) return
+        cooldownTimer.capture()
 
-        lastShotFired = currentTime
         play(LASER_BOLT.shotSound)
         spawn("LaserBolt", entity.transformComponent.position.add(PLAYER.mainWeaponPos))
     }
