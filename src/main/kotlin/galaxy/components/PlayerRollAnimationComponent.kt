@@ -3,7 +3,7 @@ package galaxy.components
 import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimationChannel
-import galaxy.entities.PLAYER
+import galaxy.entity_data.PLAYER
 import galaxy.instrumentation.ControllableAnimatedTexture
 import galaxy.playerTurnLeftAnim
 import galaxy.playerTurnRightAnim

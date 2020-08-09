@@ -8,7 +8,7 @@ import galaxy.DOWN
 import galaxy.LEFT
 import galaxy.RIGHT
 import galaxy.UP
-import galaxy.entities.PLAYER
+import galaxy.entity_data.PLAYER
 import javafx.geometry.Point2D
 import kotlin.math.abs
 import kotlin.math.sign

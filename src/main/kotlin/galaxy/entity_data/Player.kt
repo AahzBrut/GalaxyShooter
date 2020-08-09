@@ -1,4 +1,4 @@
-package galaxy.entities
+package galaxy.entity_data
 
 import javafx.geometry.Point2D
 

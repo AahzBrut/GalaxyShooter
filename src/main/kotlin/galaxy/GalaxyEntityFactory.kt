@@ -9,8 +9,8 @@ import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.Spawns
 import com.almasb.fxgl.entity.components.CollidableComponent
 import galaxy.components.*
-import galaxy.entities.ENEMY
-import galaxy.entities.LASER_BOLT
+import galaxy.entity_data.ENEMY
+import galaxy.entity_data.LASER_BOLT
 import javafx.scene.paint.Color
 
 
@@ -61,8 +61,10 @@ class GalaxyEntityFactory : EntityFactory {
 
         val enemyTexture = texture(GalaxyEntityType.ENEMY.baseTexture, ENEMY.size, ENEMY.size)
         enemyTexture.rotate = 180.0
-        return entityBuilder(SpawnData(100.0, 100.0))
+        return entityBuilder(data)
                 .type(GalaxyEntityType.ENEMY)
+                .with(CollidableComponent(true))
+                .with(EnemyMovementComponent())
                 .view(enemyTexture)
                 .build()
     }
