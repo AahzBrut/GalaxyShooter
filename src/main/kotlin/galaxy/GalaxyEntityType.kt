@@ -12,7 +12,7 @@ enum class GalaxyEntityType(
     BACKGROUND(
             "Background",
             "background/SpaceBG_Overlay.png",
-            Point2D(0.0,0.0)
+            Point2D.ZERO
 
     ),
     PLAYER(
@@ -23,6 +23,11 @@ enum class GalaxyEntityType(
     LASER_BOLT(
             "LaserBolt",
             "projectiles/laser.png",
-            Point2D(0.0,0.0)
+            Point2D.ZERO
+    ),
+    ENEMY(
+            "Enemy",
+            enemyTexture,
+            Point2D.ZERO
     )
 }
