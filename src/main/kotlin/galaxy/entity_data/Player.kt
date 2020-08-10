@@ -3,6 +3,7 @@ package galaxy.entity_data
 import javafx.geometry.Point2D
 
 data class Player(
+        val maxHealth: Int = 1,
         val numLives: Int = 3,
         val size: Double = 64.0,
         val maxSpeed: Double = 250.0,
@@ -15,6 +16,8 @@ data class Player(
 val PLAYER = Player()
 
 data class LaserBolt(
+        val maxHealth: Int = 1,
+        val damage: Int = 1,
         val speed: Double = 300.0,
         val size: Point2D = Point2D(15.0,30.0),
         val shotSound: String = "laser_shot.wav"

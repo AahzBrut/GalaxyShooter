@@ -11,6 +11,7 @@ import com.almasb.fxgl.entity.components.CollidableComponent
 import galaxy.components.*
 import galaxy.entity_data.ENEMY
 import galaxy.entity_data.LASER_BOLT
+import galaxy.entity_data.PLAYER
 import javafx.scene.paint.Color
 
 
@@ -35,6 +36,7 @@ class GalaxyEntityFactory : EntityFactory {
 
         return entityBuilder(SpawnData(GalaxyEntityType.PLAYER.spawnPosition))
                 .type(GalaxyEntityType.PLAYER)
+                .with(HealthComponent(PLAYER.maxHealth))
                 .with(CollidableComponent(true))
                 .with(PlayerMovementComponent())
                 .with(PlayerRollAnimationComponent())
@@ -49,6 +51,7 @@ class GalaxyEntityFactory : EntityFactory {
 
         return entityBuilder(data)
                 .type(GalaxyEntityType.LASER_BOLT)
+                .with(HealthComponent(LASER_BOLT.maxHealth))
                 .with(CollidableComponent(true))
                 .with(ProjectileComponent())
                 .view(texture(GalaxyEntityType.LASER_BOLT.baseTexture, LASER_BOLT.size.x, LASER_BOLT.size.y))
@@ -63,6 +66,7 @@ class GalaxyEntityFactory : EntityFactory {
         enemyTexture.rotate = 180.0
         return entityBuilder(data)
                 .type(GalaxyEntityType.ENEMY)
+                .with(HealthComponent(ENEMY.maxHealth))
                 .with(CollidableComponent(true))
                 .with(EnemyMovementComponent())
                 .view(enemyTexture)
