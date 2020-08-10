@@ -2,10 +2,17 @@ package galaxy
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getInput
+import com.almasb.fxgl.dsl.getPhysicsWorld
+import com.almasb.fxgl.dsl.getSettings
+import com.almasb.fxgl.dsl.loopBGM
+import com.almasb.fxgl.dsl.newLocalTimer
 import com.almasb.fxgl.entity.Entity
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
+import galaxy.collision.LaserBoltToEnemyCollisionHandler
+import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.controllers.EnemyController
@@ -28,6 +35,11 @@ class GalaxyApp : GameApplication() {
         getSettings().globalMusicVolume = 0.5
 
         loopBGM("music_background.wav")
+    }
+
+    override fun initPhysics() {
+        getPhysicsWorld().addCollisionHandler(LaserBoltToEnemyCollisionHandler())
+        getPhysicsWorld().addCollisionHandler(PlayerToEnemyCollisionHandler())
     }
 
     override fun initGame() {

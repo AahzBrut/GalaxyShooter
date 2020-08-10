@@ -17,7 +17,7 @@ class HealthComponent(maxHealthPoints: Int) : Component() {
     }
 
     private fun injureEntity(health: Int) {
-        TODO("Not yet implemented")
+        println("player got damaged, remaining health: $health")
     }
 
     private fun killEntity() {

@@ -3,7 +3,7 @@ package galaxy.entity_data
 import javafx.geometry.Point2D
 
 data class Player(
-        val maxHealth: Int = 1,
+        val maxHealth: Int = 3,
         val numLives: Int = 3,
         val size: Double = 64.0,
         val maxSpeed: Double = 250.0,
