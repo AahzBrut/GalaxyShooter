@@ -10,14 +10,17 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     jcenter()
+//    maven {
+//        url "https://nexus.gluonhq.com/nexus/content/repositories/releases/"
+//    }
     maven {
-        url "https://nexus.gluonhq.com/nexus/content/repositories/releases/"
+        url "http://oss.sonatype.org/content/repositories/snapshots"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    compile 'com.github.almasb:fxgl:11.10'
+    compile 'com.github.almasb:fxgl:dev-SNAPSHOT'
 }
 
 javafx {

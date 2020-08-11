@@ -15,11 +15,11 @@ class PlayerWeaponComponent : Component() {
         override fun onAction() = run { shoot() }
     }
 
-    private val cooldownTimer = newLocalTimer()
+    private val coolDownTimer = newLocalTimer()
 
     private fun shoot(){
-        if (!cooldownTimer.elapsed(Duration.seconds(PLAYER.firingDelay))) return
-        cooldownTimer.capture()
+        if (entity == null || !coolDownTimer.elapsed(Duration.seconds(PLAYER.firingDelay))) return
+        coolDownTimer.capture()
 
         play(LASER_BOLT.shotSound)
         spawn("LaserBolt", entity.transformComponent.position.add(PLAYER.mainWeaponPos))

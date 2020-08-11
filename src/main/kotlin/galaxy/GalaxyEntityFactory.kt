@@ -11,12 +11,15 @@ import com.almasb.fxgl.entity.components.BoundingBoxComponent
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.physics.BoundingShape
 import com.almasb.fxgl.physics.HitBox
+import com.almasb.fxgl.texture.AnimatedTexture
+import com.almasb.fxgl.texture.AnimationChannel
 import galaxy.components.*
 import galaxy.entity_data.ENEMY
 import galaxy.entity_data.LASER_BOLT
 import galaxy.entity_data.PLAYER
 import javafx.geometry.Point2D
 import javafx.scene.paint.Color
+import javafx.util.Duration
 
 
 class GalaxyEntityFactory : EntityFactory {
@@ -77,7 +80,6 @@ class GalaxyEntityFactory : EntityFactory {
     fun newEnemy(data: SpawnData): Entity {
 
         val enemyTexture = texture(GalaxyEntityType.ENEMY.baseTexture, ENEMY.size, ENEMY.size)
-        enemyTexture.rotate = 180.0
 
         val enemy = entityBuilder(data)
                 .type(GalaxyEntityType.ENEMY)
@@ -91,5 +93,15 @@ class GalaxyEntityFactory : EntityFactory {
         boundingBox.addHitBox(HitBox(Point2D(10.0,10.0), BoundingShape.box(PLAYER.size-10, PLAYER.size-10)))
 
         return enemy
+    }
+
+    @Suppress("UNUSED")
+    @Spawns("Explosion")
+    fun newExplosion(data: SpawnData): Entity {
+
+        return entityBuilder(data)
+                .type(GalaxyEntityType.EXPLOSION)
+                .with(ExplosionAnimationComponent(data.get("animation")))
+                .build()
     }
 }
