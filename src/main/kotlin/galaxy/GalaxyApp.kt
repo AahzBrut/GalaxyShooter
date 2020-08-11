@@ -2,13 +2,10 @@ package galaxy
 
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.dsl.getInput
-import com.almasb.fxgl.dsl.getPhysicsWorld
-import com.almasb.fxgl.dsl.getSettings
-import com.almasb.fxgl.dsl.loopBGM
-import com.almasb.fxgl.dsl.newLocalTimer
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.texture.AnimatedTexture
+import com.almasb.fxgl.texture.AnimationChannel
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
@@ -17,6 +14,11 @@ import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.controllers.EnemyController
 import javafx.scene.input.KeyCode
+import javafx.util.Duration
+import kotlin.collections.HashMap
+import kotlin.collections.map
+import kotlin.collections.set
+
 
 class GalaxyApp : GameApplication() {
 
@@ -49,6 +51,14 @@ class GalaxyApp : GameApplication() {
         player = spawnEntityType(PLAYER)
         initPlayerInput()
         enemyController = EnemyController(newLocalTimer())
+        initAnimations()
+    }
+
+    private fun initAnimations() {
+
+        animations["enemyExplosion"] = AnimatedTexture(AnimationChannel(
+                enemyExplosion.map { img -> image(img) },
+                Duration.seconds(3.0)))
     }
 
     private fun initPlayerInput() {
@@ -75,3 +85,5 @@ class GalaxyApp : GameApplication() {
         }
     }
 }
+
+val animations = HashMap<String, AnimatedTexture>()

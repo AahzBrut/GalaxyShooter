@@ -29,5 +29,10 @@ enum class GalaxyEntityType(
             "Enemy",
             enemyTexture,
             Point2D.ZERO
+    ),
+    EXPLOSION(
+            "Explosion",
+            "",
+            Point2D.ZERO
     )
 }
