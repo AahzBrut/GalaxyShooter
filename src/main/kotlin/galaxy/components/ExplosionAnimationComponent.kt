@@ -1,5 +1,6 @@
 package galaxy.components
 
+import com.almasb.fxgl.dsl.play
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
@@ -16,7 +17,7 @@ class ExplosionAnimationComponent(private val animation: AnimatedTexture): Compo
         entity.viewComponent.addChild(animatedTexture)
         animatedTexture.onCycleFinished = Runnable { explosionEnds() }
         animatedTexture.play()
-
+        play(ENEMY.explosionSound)
     }
 
     private fun explosionEnds() {
