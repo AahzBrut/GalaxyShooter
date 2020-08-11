@@ -11,15 +11,12 @@ import com.almasb.fxgl.entity.components.BoundingBoxComponent
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.physics.BoundingShape
 import com.almasb.fxgl.physics.HitBox
-import com.almasb.fxgl.texture.AnimatedTexture
-import com.almasb.fxgl.texture.AnimationChannel
 import galaxy.components.*
 import galaxy.entity_data.ENEMY
 import galaxy.entity_data.LASER_BOLT
 import galaxy.entity_data.PLAYER
 import javafx.geometry.Point2D
 import javafx.scene.paint.Color
-import javafx.util.Duration
 
 
 class GalaxyEntityFactory : EntityFactory {
