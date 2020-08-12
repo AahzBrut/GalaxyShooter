@@ -6,6 +6,7 @@ import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
+import com.almasb.fxgl.texture.merge
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
@@ -13,6 +14,7 @@ import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.controllers.EnemyController
+import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.util.Duration
 import kotlin.collections.HashMap
@@ -37,6 +39,7 @@ class GalaxyApp : GameApplication() {
         getSettings().globalMusicVolume = 0.5
 
         loopBGM("music_background.wav")
+        initAnimations()
     }
 
     override fun initPhysics() {
@@ -51,14 +54,24 @@ class GalaxyApp : GameApplication() {
         player = spawnEntityType(PLAYER)
         initPlayerInput()
         enemyController = EnemyController(newLocalTimer())
-        initAnimations()
     }
 
     private fun initAnimations() {
 
-        animations["enemyExplosion"] = AnimatedTexture(AnimationChannel(
-                enemyExplosion.map { img -> image(img) },
-                Duration.seconds(3.0)))
+        animations["enemyExplosion"] = Triple(
+                merge(enemyExplosion.map { img -> image(img) }),
+                Duration.seconds(3.0),
+                enemyExplosion.size)
+
+        animations["playerRollAnim"] = Triple(
+                merge(playerRollAnim.map { img -> image(img) }),
+                Duration.seconds(1.0),
+                playerRollAnim.size)
+
+        animations["playerThrusterAnim"] = Triple(
+                merge(playerThrusterAnim.map { img -> image(img) }),
+                Duration.seconds(3.0),
+                playerThrusterAnim.size)
     }
 
     private fun initPlayerInput() {
@@ -86,4 +99,4 @@ class GalaxyApp : GameApplication() {
     }
 }
 
-val animations = HashMap<String, AnimatedTexture>()
+val animations = HashMap<String, Triple<Image, Duration, Int>>()

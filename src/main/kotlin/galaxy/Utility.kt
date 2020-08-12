@@ -14,28 +14,26 @@ val UP = Point2D(0.0, -1.0)
 val DOWN = Point2D(0.0, 1.0)
 const val K: Long = 1_000
 
+const val enemyTexture = "enemy/enemy.png"
 
-val playerTurnLeftAnim = mapOf(
-        0 to "player/turn-left/Player Turn Left0000.png",
-        1 to "player/turn-left/Player Turn Left0001.png",
-        2 to "player/turn-left/Player Turn Left0002.png",
-        3 to "player/turn-left/Player Turn Left0003.png",
-        4 to "player/turn-left/Player Turn Left0004.png",
-        5 to "player/turn-left/Player Turn Left0005.png",
-        6 to "player/turn-left/Player Turn Left0006.png",
-        7 to "player/turn-left/Player Turn Left0007.png",
-        8 to "player/turn-left/Player Turn Left0008.png")
-
-val playerTurnRightAnim = mapOf(
-        0 to "player/turn-right/Player Turn Right0000.png",
-        1 to "player/turn-right/Player Turn Right0001.png",
-        2 to "player/turn-right/Player Turn Right0002.png",
-        3 to "player/turn-right/Player Turn Right0003.png",
-        4 to "player/turn-right/Player Turn Right0004.png",
-        5 to "player/turn-right/Player Turn Right0005.png",
-        6 to "player/turn-right/Player Turn Right0006.png",
-        7 to "player/turn-right/Player Turn Right0007.png",
-        8 to "player/turn-right/Player Turn Right0008.png")
+val playerRollAnim = listOf(
+        "player/turn-left/Player Turn Left0008.png",
+        "player/turn-left/Player Turn Left0007.png",
+        "player/turn-left/Player Turn Left0006.png",
+        "player/turn-left/Player Turn Left0005.png",
+        "player/turn-left/Player Turn Left0004.png",
+        "player/turn-left/Player Turn Left0003.png",
+        "player/turn-left/Player Turn Left0002.png",
+        "player/turn-left/Player Turn Left0001.png",
+        "player/turn-left/Player Turn Left0000.png",
+        "player/turn-right/Player Turn Right0001.png",
+        "player/turn-right/Player Turn Right0002.png",
+        "player/turn-right/Player Turn Right0003.png",
+        "player/turn-right/Player Turn Right0004.png",
+        "player/turn-right/Player Turn Right0005.png",
+        "player/turn-right/Player Turn Right0006.png",
+        "player/turn-right/Player Turn Right0007.png",
+        "player/turn-right/Player Turn Right0008.png")
 
 val playerThrusterAnim = listOf(
         "player/thruster/Thruster_00000.png",
@@ -59,8 +57,6 @@ val playerThrusterAnim = listOf(
         "player/thruster/Thruster_00018.png",
         "player/thruster/Thruster_00019.png",
         "player/thruster/Thruster_00020.png")
-
-const val enemyTexture = "enemy/enemy.png"
 
 val enemyExplosion = listOf(
         "enemy/explode/EnemyTurnLeft0000_00000.png",

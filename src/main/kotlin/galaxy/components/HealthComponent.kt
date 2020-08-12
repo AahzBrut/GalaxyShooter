@@ -27,7 +27,7 @@ class HealthComponent(maxHealthPoints: Int) : Component() {
     private fun killEntity() {
         if (entity.type == GalaxyEntityType.ENEMY)
             spawn("Explosion", SpawnData(entity.transformComponent.position)
-                    .put("animation", animations["enemyExplosion"] ?: error("Enemy explosion animation was not initialized"))
+                    .put("animation", animations["enemyExplosion"]!!)
             )
         entity.removeFromWorld()
     }
