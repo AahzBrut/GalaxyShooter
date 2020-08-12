@@ -4,8 +4,6 @@ import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.texture.AnimatedTexture
-import com.almasb.fxgl.texture.AnimationChannel
 import com.almasb.fxgl.texture.merge
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
@@ -59,9 +57,9 @@ class GalaxyApp : GameApplication() {
     private fun initAnimations() {
 
         animations["enemyExplosion"] = Triple(
-                merge(enemyExplosion.map { img -> image(img) }),
+                merge(enemyExplosionAnim.map { img -> image(img) }),
                 Duration.seconds(3.0),
-                enemyExplosion.size)
+                enemyExplosionAnim.size)
 
         animations["playerRollAnim"] = Triple(
                 merge(playerRollAnim.map { img -> image(img) }),
@@ -72,6 +70,11 @@ class GalaxyApp : GameApplication() {
                 merge(playerThrusterAnim.map { img -> image(img) }),
                 Duration.seconds(3.0),
                 playerThrusterAnim.size)
+
+        animations["engineOnFireAnim"] = Triple(
+                merge(engineOnFireAnim.map { img -> image(img) }),
+                Duration.seconds(2.0),
+                engineOnFireAnim.size)
     }
 
     private fun initPlayerInput() {
