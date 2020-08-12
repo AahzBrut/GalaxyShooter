@@ -4,7 +4,6 @@ import com.almasb.fxgl.dsl.play
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
-import galaxy.enemyExplosion
 import galaxy.entity_data.ENEMY
 import javafx.scene.image.Image
 import javafx.util.Duration

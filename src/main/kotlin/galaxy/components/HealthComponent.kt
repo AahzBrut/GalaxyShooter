@@ -21,7 +21,9 @@ class HealthComponent(maxHealthPoints: Int) : Component() {
     }
 
     private fun injureEntity(health: Int) {
-        println("player got damaged, remaining health: $health")
+        if (entity.type == GalaxyEntityType.PLAYER) {
+            entity.getComponent(EngineOnFireAnimationComponent::class.java).takeDamage(health)
+        }
     }
 
     private fun killEntity() {

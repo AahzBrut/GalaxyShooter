@@ -46,6 +46,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(PlayerRollAnimationComponent())
                 .with(PlayerThrusterAnimationComponent())
                 .with(PlayerWeaponComponent())
+                .with(EngineOnFireAnimationComponent())
                 .build()
 
         val boundingBox = player.getComponent(BoundingBoxComponent::class.java)
