@@ -1,9 +1,14 @@
 package galaxy
 
-import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.*
+import com.almasb.fxgl.dsl.getGameWorld
+import com.almasb.fxgl.dsl.getInput
+import com.almasb.fxgl.dsl.getPhysicsWorld
+import com.almasb.fxgl.dsl.getSettings
+import com.almasb.fxgl.dsl.image
+import com.almasb.fxgl.dsl.loopBGM
+import com.almasb.fxgl.dsl.newLocalTimer
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.texture.merge
 import galaxy.GalaxyEntityType.BACKGROUND
@@ -16,8 +21,6 @@ import galaxy.controllers.EnemyController
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
 import javafx.util.Duration
-import kotlin.collections.HashMap
-import kotlin.collections.map
 import kotlin.collections.set
 
 
