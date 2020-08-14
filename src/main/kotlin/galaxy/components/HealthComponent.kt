@@ -1,7 +1,5 @@
 package galaxy.components
 
-import com.almasb.fxgl.dsl.getGameState
-import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
