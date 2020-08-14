@@ -1,23 +1,15 @@
 package galaxy.components
 
-import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
-import galaxy.playerThrusterAnim
-import javafx.scene.image.Image
-import javafx.util.Duration
+import galaxy.animations
 
 class PlayerThrusterAnimationComponent : Component() {
 
-    private val images = mutableListOf<Image>()
-    private lateinit var texture: AnimatedTexture
-
-
     override fun onAdded() {
-        images.addAll(playerThrusterAnim.map{ item -> image(item) })
-        val channel = AnimationChannel(images, Duration.seconds(1.0))
-        texture = AnimatedTexture(channel)
+        val channel = AnimationChannel(animations["playerThrusterAnim"]!!.first, animations["playerThrusterAnim"]!!.second, animations["playerThrusterAnim"]!!.third)
+        val texture = AnimatedTexture(channel)
         texture.translateY = 45.0 / entity.transformComponent.scaleY
         entity.viewComponent.addChild(texture)
         texture.loop()

@@ -4,14 +4,14 @@ import com.almasb.fxgl.dsl.play
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimatedTexture
 import com.almasb.fxgl.texture.AnimationChannel
-import galaxy.enemyExplosion
 import galaxy.entity_data.ENEMY
+import javafx.scene.image.Image
 import javafx.util.Duration
 
-class ExplosionAnimationComponent(private val animation: AnimatedTexture): Component() {
+class ExplosionAnimationComponent(private val animation: Triple<Image, Duration, Int>): Component() {
 
     override fun onAdded() {
-        val animatedTexture = AnimatedTexture(AnimationChannel(animation.image, Duration.seconds(3.0), enemyExplosion.size))
+        val animatedTexture = AnimatedTexture(AnimationChannel(animation.first, animation.second, animation.third))
         entity.transformComponent.scaleX = ENEMY.size / animatedTexture.height
         entity.transformComponent.scaleY = ENEMY.size / animatedTexture.height
         entity.viewComponent.addChild(animatedTexture)

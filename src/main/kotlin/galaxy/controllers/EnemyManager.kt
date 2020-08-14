@@ -8,7 +8,7 @@ import galaxy.entity_data.ENEMY
 import galaxy.entity_data.ENEMY_SPAWN
 import javafx.util.Duration
 
-class EnemyController(private val spawnTimer: LocalTimer) {
+class EnemyManager(private val spawnTimer: LocalTimer) {
 
     @Suppress("UNUSED_PARAMETER")
     fun spawnEnemies(tpf: Double) {

@@ -11,7 +11,15 @@ import com.almasb.fxgl.entity.components.BoundingBoxComponent
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.physics.BoundingShape
 import com.almasb.fxgl.physics.HitBox
-import galaxy.components.*
+import galaxy.components.EnemyMovementComponent
+import galaxy.components.EngineOnFireAnimationComponent
+import galaxy.components.ExplosionAnimationComponent
+import galaxy.components.HealthComponent
+import galaxy.components.PlayerMovementComponent
+import galaxy.components.PlayerRollAnimationComponent
+import galaxy.components.PlayerThrusterAnimationComponent
+import galaxy.components.PlayerWeaponComponent
+import galaxy.components.ProjectileComponent
 import galaxy.entity_data.ENEMY
 import galaxy.entity_data.LASER_BOLT
 import galaxy.entity_data.PLAYER
@@ -28,10 +36,10 @@ class GalaxyEntityFactory : EntityFactory {
         getGameScene().setBackgroundColor(Color.BLACK)
 
         return entityBuilder()
-            .at(-10.0, -10.0)
-            .view(texture(data.get("baseTexture"), 820.0, 620.0))
-            .zIndex(-500)
-            .build()
+                .at(-10.0, -10.0)
+                .view(texture(data.get("baseTexture"), 820.0, 620.0))
+                .zIndex(-500)
+                .build()
     }
 
     @Suppress("UNUSED", "UNUSED_PARAMETER")
@@ -46,10 +54,13 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(PlayerRollAnimationComponent())
                 .with(PlayerThrusterAnimationComponent())
                 .with(PlayerWeaponComponent())
+                .with(EngineOnFireAnimationComponent())
                 .build()
 
         val boundingBox = player.getComponent(BoundingBoxComponent::class.java)
-        boundingBox.addHitBox(HitBox(Point2D(10.0,10.0), BoundingShape.box(PLAYER.size-10, PLAYER.size-10)))
+        val xSize = PLAYER.size * PLAYER.hitBoxScale * .65
+        val ySize = PLAYER.size * PLAYER.hitBoxScale * .8
+        boundingBox.addHitBox(HitBox(Point2D(xSize * .28, ySize * .1), BoundingShape.box(xSize, ySize)))
 
         return player
     }
@@ -67,7 +78,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .build()
 
         val boundingBox = bolt.getComponent(BoundingBoxComponent::class.java)
-        boundingBox.addHitBox(HitBox(Point2D(5.0,0.0), BoundingShape.box(LASER_BOLT.size.x/3, LASER_BOLT.size.y)))
+        boundingBox.addHitBox(HitBox(Point2D(LASER_BOLT.size.x / 3, 0.0), BoundingShape.box(LASER_BOLT.size.x / 3, LASER_BOLT.size.y)))
 
         return bolt
     }
@@ -87,7 +98,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .build()
 
         val boundingBox = enemy.getComponent(BoundingBoxComponent::class.java)
-        boundingBox.addHitBox(HitBox(Point2D(10.0,10.0), BoundingShape.box(PLAYER.size-10, PLAYER.size-10)))
+        boundingBox.addHitBox(HitBox(Point2D(ENEMY.size / 4, ENEMY.size / 4), BoundingShape.box(ENEMY.size / 2, ENEMY.size / 2)))
 
         return enemy
     }

@@ -1,44 +1,37 @@
 package galaxy.components
 
-import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.texture.AnimationChannel
+import com.almasb.fxgl.texture.Texture
+import galaxy.animations
 import galaxy.entity_data.PLAYER
 import galaxy.instrumentation.ControllableAnimatedTexture
-import galaxy.playerTurnLeftAnim
-import galaxy.playerTurnRightAnim
-import javafx.scene.image.Image
-import javafx.util.Duration
-import kotlin.math.sign
 import kotlin.math.abs
+import kotlin.math.sign
 
 
 class PlayerRollAnimationComponent : Component() {
 
     private lateinit var movementComponent: PlayerMovementComponent
-    private lateinit var texture: ControllableAnimatedTexture
-    private val textures = mutableListOf<Image>()
     private var rollAngle = 0.0
     private val rollSpeed = PLAYER.rollSpeed
 
     override fun onAdded() {
         movementComponent = entity.getComponent(PlayerMovementComponent::class.java)
-        loadTextures()
+        val texture = loadTextures()
         entity.transformComponent.scaleX = PLAYER.size / texture.height
         entity.transformComponent.scaleY = PLAYER.size / texture.height
         entity.viewComponent.addChild(texture)
     }
 
-    private fun loadTextures() {
-        textures.addAll(playerTurnLeftAnim.toList().reversed().map { (_, value) -> image(value) })
-        textures.addAll(playerTurnRightAnim.toList().drop(1).map { (_, value) -> image(value) })
+    private fun loadTextures() : Texture {
 
-        val channel = AnimationChannel(textures, Duration.ZERO)
-        texture = ControllableAnimatedTexture(channel, ::getRollAngle)
+        val channel = AnimationChannel(animations["playerRollAnim"]!!.first, animations["playerRollAnim"]!!.second, animations["playerRollAnim"]!!.third)
+        return ControllableAnimatedTexture(channel, ::getRollAngle)
     }
 
     private fun getRollAngle(tpf: Double) : Int {
-        val maxRoll = (textures.size - 1) / 2
+        val maxRoll = (animations["playerRollAnim"]!!.third - 1) / 2
         var curDirection = movementComponent.currentDirection.x
         curDirection = if (curDirection == 0.0 && rollAngle != 0.0) -sign(rollAngle) else curDirection
 
