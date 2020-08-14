@@ -1,5 +1,6 @@
 package galaxy
 
+import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.animation.Interpolators
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
@@ -40,10 +41,15 @@ class GalaxyApp : GameApplication() {
     private lateinit var enemyManager: EnemyManager
 
     override fun initSettings(settings: GameSettings) {
-        settings.width = 800
-        settings.height = 600
-        settings.title = "Galaxy Shooter"
-        settings.version = "1.0-SNAPSHOT"
+        with(settings) {
+            width = 800
+            height = 600
+            title = "Galaxy Shooter"
+            version = "1.0-SNAPSHOT"
+            applicationMode = ApplicationMode.DEVELOPER
+            isMainMenuEnabled = true
+            sceneFactory = GalaxySceneFactory()
+        }
     }
 
     override fun onPreInit() {
@@ -135,13 +141,13 @@ class GalaxyApp : GameApplication() {
     override fun onUpdate(tpf: Double) {
         enemyManager.spawnEnemies(tpf)
     }
-
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
             launch(GalaxyApp::class.java, args)
         }
     }
+
 }
 
 val animations = HashMap<String, Triple<Image, Duration, Int>>()
