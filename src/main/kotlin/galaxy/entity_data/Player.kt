@@ -19,7 +19,7 @@ val PLAYER = Player()
 data class LaserBolt(
         val maxHealth: Int = 1,
         val damage: Int = 1,
-        val speed: Double = 10.0,
+        val speed: Double = 300.0,
         val size: Point2D = Point2D(15.0, 30.0),
         val shotSound: String = "laser_shot.wav"
 )

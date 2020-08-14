@@ -1,12 +1,18 @@
 package galaxy
 
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.SpawnData
+import galaxy.entity_data.ENEMY
 import javafx.geometry.Point2D
 
 
 fun spawnEntityType(entityType: GalaxyEntityType) = spawn(entityType.typeName, SpawnData(entityType.spawnPosition).put("baseTexture", entityType.baseTexture))
 
+fun score(score: Int) {
+    val oldScore = getGameState().getValue<Int>("score")
+    getGameState().setValue("score", oldScore + score)
+}
 
 val LEFT = Point2D(-1.0, 0.0)
 val RIGHT = Point2D(1.0, 0.0)
