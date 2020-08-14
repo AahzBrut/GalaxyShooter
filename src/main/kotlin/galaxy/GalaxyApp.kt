@@ -1,11 +1,19 @@
 package galaxy
 
+import com.almasb.fxgl.animation.Interpolators
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
+import com.almasb.fxgl.core.collection.PropertyChangeListener
+import com.almasb.fxgl.dsl.addUINode
+import com.almasb.fxgl.dsl.animationBuilder
+import com.almasb.fxgl.dsl.getAppWidth
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.dsl.getInput
 import com.almasb.fxgl.dsl.getPhysicsWorld
 import com.almasb.fxgl.dsl.getSettings
+import com.almasb.fxgl.dsl.getUIFactoryService
+import com.almasb.fxgl.dsl.getip
 import com.almasb.fxgl.dsl.image
 import com.almasb.fxgl.dsl.loopBGM
 import com.almasb.fxgl.dsl.newLocalTimer
@@ -17,9 +25,11 @@ import galaxy.collision.LaserBoltToEnemyCollisionHandler
 import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
-import galaxy.controllers.EnemyController
+import galaxy.controllers.EnemyManager
+import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
+import javafx.scene.text.Text
 import javafx.util.Duration
 import kotlin.collections.set
 
@@ -27,7 +37,7 @@ import kotlin.collections.set
 class GalaxyApp : GameApplication() {
 
     private lateinit var player: Entity
-    private lateinit var enemyController: EnemyController
+    private lateinit var enemyManager: EnemyManager
 
     override fun initSettings(settings: GameSettings) {
         settings.width = 800
@@ -55,7 +65,35 @@ class GalaxyApp : GameApplication() {
         spawnEntityType(BACKGROUND)
         player = spawnEntityType(PLAYER)
         initPlayerInput()
-        enemyController = EnemyController(newLocalTimer())
+        enemyManager = EnemyManager(newLocalTimer())
+    }
+
+    override fun initGameVars(vars: MutableMap<String, Any>) {
+        vars["score"] = 0
+    }
+
+    override fun initUI() {
+        val text = getUIFactoryService().newText("", 24.0)
+        text.textProperty().bind(getip("score").asString("Score:%d"))
+        addScoreListener(text)
+        addUINode(text, (getAppWidth() - 200).toDouble(), 40.0)
+    }
+
+    private fun addScoreListener(text: Text) {
+
+        getGameState().addListener("score", object : PropertyChangeListener<Int> {
+            override fun onChange(prev: Int, now: Int) {
+                animationBuilder()
+                        .duration(Duration.seconds(0.5))
+                        .interpolator(Interpolators.BOUNCE.EASE_OUT())
+                        .repeat(2)
+                        .autoReverse(true)
+                        .scale(text)
+                        .from(Point2D(1.0, 1.0))
+                        .to(Point2D(1.2, 1.2))
+                        .buildAndPlay()
+            }
+        })
     }
 
     private fun initAnimations() {
@@ -95,7 +133,7 @@ class GalaxyApp : GameApplication() {
     }
 
     override fun onUpdate(tpf: Double) {
-        enemyController.spawnEnemies(tpf)
+        enemyManager.spawnEnemies(tpf)
     }
 
     companion object {
