@@ -1,14 +1,12 @@
 package galaxy
 
-import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.animation.Interpolators
+import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.core.collection.PropertyChangeListener
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
-import com.almasb.fxgl.texture.AnimatedTexture
-import com.almasb.fxgl.texture.AnimationChannel
 import com.almasb.fxgl.texture.Texture
 import com.almasb.fxgl.texture.merge
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
@@ -17,7 +15,6 @@ import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.controllers.EnemyManager
 import galaxy.entity_data.PLAYER
-import galaxy.instrumentation.ControllableAnimatedTexture
 import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode

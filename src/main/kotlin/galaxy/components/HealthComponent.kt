@@ -7,7 +7,6 @@ import com.almasb.fxgl.entity.component.Component
 import galaxy.GalaxyEntityType
 import galaxy.animations
 import galaxy.entity_data.ENEMY
-import galaxy.entity_data.PLAYER
 import galaxy.score
 
 class HealthComponent(maxHealthPoints: Int) : Component() {

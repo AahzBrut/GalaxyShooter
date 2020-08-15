@@ -7,7 +7,6 @@ import com.almasb.fxgl.texture.AnimationChannel
 import galaxy.entity_data.ENEMY
 import javafx.scene.image.Image
 import javafx.util.Duration
-import kotlin.properties.Delegates
 
 class ExplosionAnimationComponent(private val animation: Triple<Image, Duration, Int>): Component() {
 
