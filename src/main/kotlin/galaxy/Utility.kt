@@ -2,12 +2,10 @@ package galaxy
 
 import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.spawn
-import com.almasb.fxgl.entity.SpawnData
-import galaxy.entity_data.ENEMY
 import javafx.geometry.Point2D
 
 
-fun spawnEntityType(entityType: GalaxyEntityType) = spawn(entityType.typeName, SpawnData(entityType.spawnPosition).put("baseTexture", entityType.baseTexture))
+fun spawnEntityType(entityType: GalaxyEntityType) = spawn(entityType.typeName())
 
 fun score(score: Int) {
     val oldScore = getGameState().getValue<Int>("score")
@@ -18,9 +16,8 @@ val LEFT = Point2D(-1.0, 0.0)
 val RIGHT = Point2D(1.0, 0.0)
 val UP = Point2D(0.0, -1.0)
 val DOWN = Point2D(0.0, 1.0)
-const val K: Long = 1_000
 
-const val enemyTexture = "enemy/enemy.png"
+const val backGroundTexture = "background/SpaceBG_Overlay.png"
 
 val playerRollAnim = listOf(
         "player/turn-left/Player Turn Left0008.png",
@@ -225,64 +222,71 @@ val enemyExplosionAnim = listOf(
         "enemy/explode/EnemyTurnLeft0000_00157.png")
 
 val engineOnFireAnim = listOf(
-                "player/engine-on-fire/Fire_00000.png",
-                "player/engine-on-fire/Fire_00001.png",
-                "player/engine-on-fire/Fire_00002.png",
-                "player/engine-on-fire/Fire_00003.png",
-                "player/engine-on-fire/Fire_00004.png",
-                "player/engine-on-fire/Fire_00005.png",
-                "player/engine-on-fire/Fire_00006.png",
-                "player/engine-on-fire/Fire_00007.png",
-                "player/engine-on-fire/Fire_00008.png",
-                "player/engine-on-fire/Fire_00009.png",
-                "player/engine-on-fire/Fire_00010.png",
-                "player/engine-on-fire/Fire_00011.png",
-                "player/engine-on-fire/Fire_00012.png",
-                "player/engine-on-fire/Fire_00013.png",
-                "player/engine-on-fire/Fire_00014.png",
-                "player/engine-on-fire/Fire_00015.png",
-                "player/engine-on-fire/Fire_00016.png",
-                "player/engine-on-fire/Fire_00017.png",
-                "player/engine-on-fire/Fire_00018.png",
-                "player/engine-on-fire/Fire_00019.png",
-                "player/engine-on-fire/Fire_00020.png",
-                "player/engine-on-fire/Fire_00021.png",
-                "player/engine-on-fire/Fire_00022.png",
-                "player/engine-on-fire/Fire_00023.png",
-                "player/engine-on-fire/Fire_00024.png",
-                "player/engine-on-fire/Fire_00025.png",
-                "player/engine-on-fire/Fire_00026.png",
-                "player/engine-on-fire/Fire_00027.png",
-                "player/engine-on-fire/Fire_00028.png",
-                "player/engine-on-fire/Fire_00029.png",
-                "player/engine-on-fire/Fire_00030.png",
-                "player/engine-on-fire/Fire_00031.png",
-                "player/engine-on-fire/Fire_00032.png",
-                "player/engine-on-fire/Fire_00033.png",
-                "player/engine-on-fire/Fire_00034.png",
-                "player/engine-on-fire/Fire_00035.png",
-                "player/engine-on-fire/Fire_00036.png",
-                "player/engine-on-fire/Fire_00037.png",
-                "player/engine-on-fire/Fire_00038.png",
-                "player/engine-on-fire/Fire_00039.png",
-                "player/engine-on-fire/Fire_00040.png",
-                "player/engine-on-fire/Fire_00041.png",
-                "player/engine-on-fire/Fire_00042.png",
-                "player/engine-on-fire/Fire_00043.png",
-                "player/engine-on-fire/Fire_00044.png",
-                "player/engine-on-fire/Fire_00045.png",
-                "player/engine-on-fire/Fire_00046.png",
-                "player/engine-on-fire/Fire_00047.png",
-                "player/engine-on-fire/Fire_00048.png",
-                "player/engine-on-fire/Fire_00049.png",
-                "player/engine-on-fire/Fire_00050.png",
-                "player/engine-on-fire/Fire_00051.png",
-                "player/engine-on-fire/Fire_00052.png",
-                "player/engine-on-fire/Fire_00053.png",
-                "player/engine-on-fire/Fire_00054.png",
-                "player/engine-on-fire/Fire_00055.png",
-                "player/engine-on-fire/Fire_00056.png",
-                "player/engine-on-fire/Fire_00057.png",
-                "player/engine-on-fire/Fire_00058.png",
-                "player/engine-on-fire/Fire_00059.png",
-                "player/engine-on-fire/Fire_00060.png")
+        "player/engine-on-fire/Fire_00000.png",
+        "player/engine-on-fire/Fire_00001.png",
+        "player/engine-on-fire/Fire_00002.png",
+        "player/engine-on-fire/Fire_00003.png",
+        "player/engine-on-fire/Fire_00004.png",
+        "player/engine-on-fire/Fire_00005.png",
+        "player/engine-on-fire/Fire_00006.png",
+        "player/engine-on-fire/Fire_00007.png",
+        "player/engine-on-fire/Fire_00008.png",
+        "player/engine-on-fire/Fire_00009.png",
+        "player/engine-on-fire/Fire_00010.png",
+        "player/engine-on-fire/Fire_00011.png",
+        "player/engine-on-fire/Fire_00012.png",
+        "player/engine-on-fire/Fire_00013.png",
+        "player/engine-on-fire/Fire_00014.png",
+        "player/engine-on-fire/Fire_00015.png",
+        "player/engine-on-fire/Fire_00016.png",
+        "player/engine-on-fire/Fire_00017.png",
+        "player/engine-on-fire/Fire_00018.png",
+        "player/engine-on-fire/Fire_00019.png",
+        "player/engine-on-fire/Fire_00020.png",
+        "player/engine-on-fire/Fire_00021.png",
+        "player/engine-on-fire/Fire_00022.png",
+        "player/engine-on-fire/Fire_00023.png",
+        "player/engine-on-fire/Fire_00024.png",
+        "player/engine-on-fire/Fire_00025.png",
+        "player/engine-on-fire/Fire_00026.png",
+        "player/engine-on-fire/Fire_00027.png",
+        "player/engine-on-fire/Fire_00028.png",
+        "player/engine-on-fire/Fire_00029.png",
+        "player/engine-on-fire/Fire_00030.png",
+        "player/engine-on-fire/Fire_00031.png",
+        "player/engine-on-fire/Fire_00032.png",
+        "player/engine-on-fire/Fire_00033.png",
+        "player/engine-on-fire/Fire_00034.png",
+        "player/engine-on-fire/Fire_00035.png",
+        "player/engine-on-fire/Fire_00036.png",
+        "player/engine-on-fire/Fire_00037.png",
+        "player/engine-on-fire/Fire_00038.png",
+        "player/engine-on-fire/Fire_00039.png",
+        "player/engine-on-fire/Fire_00040.png",
+        "player/engine-on-fire/Fire_00041.png",
+        "player/engine-on-fire/Fire_00042.png",
+        "player/engine-on-fire/Fire_00043.png",
+        "player/engine-on-fire/Fire_00044.png",
+        "player/engine-on-fire/Fire_00045.png",
+        "player/engine-on-fire/Fire_00046.png",
+        "player/engine-on-fire/Fire_00047.png",
+        "player/engine-on-fire/Fire_00048.png",
+        "player/engine-on-fire/Fire_00049.png",
+        "player/engine-on-fire/Fire_00050.png",
+        "player/engine-on-fire/Fire_00051.png",
+        "player/engine-on-fire/Fire_00052.png",
+        "player/engine-on-fire/Fire_00053.png",
+        "player/engine-on-fire/Fire_00054.png",
+        "player/engine-on-fire/Fire_00055.png",
+        "player/engine-on-fire/Fire_00056.png",
+        "player/engine-on-fire/Fire_00057.png",
+        "player/engine-on-fire/Fire_00058.png",
+        "player/engine-on-fire/Fire_00059.png",
+        "player/engine-on-fire/Fire_00060.png")
+
+val numberOfLives = listOf(
+        "player/lives/no_lives.png",
+        "player/lives/One.png",
+        "player/lives/Two.png",
+        "player/lives/Three.png"
+)

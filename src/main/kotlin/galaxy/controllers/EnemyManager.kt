@@ -16,6 +16,6 @@ class EnemyManager(private val spawnTimer: LocalTimer) {
         spawnTimer.capture()
 
         val spawnRange = IntRange(0, (getAppWidth() - ENEMY.size).toInt())
-        spawn(GalaxyEntityType.ENEMY.typeName, spawnRange.random().toDouble(), -ENEMY.size)
+        spawn(GalaxyEntityType.ENEMY.typeName(), spawnRange.random().toDouble(), -ENEMY.size)
     }
 }

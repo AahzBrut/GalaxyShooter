@@ -5,28 +5,19 @@ import com.almasb.fxgl.animation.Interpolators
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.core.collection.PropertyChangeListener
-import com.almasb.fxgl.dsl.addUINode
-import com.almasb.fxgl.dsl.animationBuilder
-import com.almasb.fxgl.dsl.getAppWidth
-import com.almasb.fxgl.dsl.getGameState
-import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.dsl.getInput
-import com.almasb.fxgl.dsl.getPhysicsWorld
-import com.almasb.fxgl.dsl.getSettings
-import com.almasb.fxgl.dsl.getUIFactoryService
-import com.almasb.fxgl.dsl.getip
-import com.almasb.fxgl.dsl.image
-import com.almasb.fxgl.dsl.loopBGM
-import com.almasb.fxgl.dsl.newLocalTimer
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.texture.AnimatedTexture
+import com.almasb.fxgl.texture.AnimationChannel
+import com.almasb.fxgl.texture.Texture
 import com.almasb.fxgl.texture.merge
-import galaxy.GalaxyEntityType.BACKGROUND
-import galaxy.GalaxyEntityType.PLAYER
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
 import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.controllers.EnemyManager
+import galaxy.entity_data.PLAYER
+import galaxy.instrumentation.ControllableAnimatedTexture
 import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
@@ -68,17 +59,42 @@ class GalaxyApp : GameApplication() {
     override fun initGame() {
         getGameWorld().addEntityFactory(GalaxyEntityFactory())
 
-        spawnEntityType(BACKGROUND)
-        player = spawnEntityType(PLAYER)
+        spawnEntityType(GalaxyEntityType.BACKGROUND)
+        player = spawnEntityType(GalaxyEntityType.PLAYER)
         initPlayerInput()
         enemyManager = EnemyManager(newLocalTimer())
     }
 
     override fun initGameVars(vars: MutableMap<String, Any>) {
         vars["score"] = 0
+        vars["numLives"] = PLAYER.numLives
     }
 
     override fun initUI() {
+        initScoreUI()
+        initNumLivesUI()
+    }
+
+    private fun initNumLivesUI() {
+        val numLivesUI = Texture(image(numberOfLives[geti("numLives")]))
+        numLivesUI.x = 10.0
+        numLivesUI.y = 10.0
+        numLivesUI.fitHeight = 64.0
+        numLivesUI.fitWidth = 128.0
+
+        addNumLivesListener(numLivesUI)
+        getGameScene().addUINode(numLivesUI)
+    }
+
+    private fun addNumLivesListener(numLivesUI: Texture) {
+        getGameState().addListener("numLives", object : PropertyChangeListener<Int> {
+            override fun onChange(prev: Int, now: Int) {
+                numLivesUI.image = image(numberOfLives[geti("numLives")])
+            }
+        })
+    }
+
+    private fun initScoreUI() {
         val text = getUIFactoryService().newText("", 24.0)
         text.textProperty().bind(getip("score").asString("Score:%d"))
         addScoreListener(text)
@@ -90,14 +106,14 @@ class GalaxyApp : GameApplication() {
         getGameState().addListener("score", object : PropertyChangeListener<Int> {
             override fun onChange(prev: Int, now: Int) {
                 animationBuilder()
-                        .duration(Duration.seconds(0.5))
-                        .interpolator(Interpolators.BOUNCE.EASE_OUT())
-                        .repeat(2)
-                        .autoReverse(true)
-                        .scale(text)
-                        .from(Point2D(1.0, 1.0))
-                        .to(Point2D(1.2, 1.2))
-                        .buildAndPlay()
+                    .duration(Duration.seconds(0.5))
+                    .interpolator(Interpolators.BOUNCE.EASE_OUT())
+                    .repeat(2)
+                    .autoReverse(true)
+                    .scale(text)
+                    .from(Point2D(1.0, 1.0))
+                    .to(Point2D(1.2, 1.2))
+                    .buildAndPlay()
             }
         })
     }
@@ -105,24 +121,34 @@ class GalaxyApp : GameApplication() {
     private fun initAnimations() {
 
         animations["enemyExplosion"] = Triple(
-                merge(enemyExplosionAnim.map { img -> image(img) }),
-                Duration.seconds(3.0),
-                enemyExplosionAnim.size)
+            merge(enemyExplosionAnim.map { img -> image(img) }),
+            Duration.seconds(3.0),
+            enemyExplosionAnim.size
+        )
 
         animations["playerRollAnim"] = Triple(
-                merge(playerRollAnim.map { img -> image(img) }),
-                Duration.seconds(1.0),
-                playerRollAnim.size)
+            merge(playerRollAnim.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            playerRollAnim.size
+        )
 
         animations["playerThrusterAnim"] = Triple(
-                merge(playerThrusterAnim.map { img -> image(img) }),
-                Duration.seconds(3.0),
-                playerThrusterAnim.size)
+            merge(playerThrusterAnim.map { img -> image(img) }),
+            Duration.seconds(3.0),
+            playerThrusterAnim.size
+        )
 
         animations["engineOnFireAnim"] = Triple(
-                merge(engineOnFireAnim.map { img -> image(img) }),
-                Duration.seconds(2.0),
-                engineOnFireAnim.size)
+            merge(engineOnFireAnim.map { img -> image(img) }),
+            Duration.seconds(2.0),
+            engineOnFireAnim.size
+        )
+
+        animations["numberOfLives"] = Triple(
+            merge(numberOfLives.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            numberOfLives.size
+        )
     }
 
     private fun initPlayerInput() {
@@ -141,6 +167,7 @@ class GalaxyApp : GameApplication() {
     override fun onUpdate(tpf: Double) {
         enemyManager.spawnEnemies(tpf)
     }
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {

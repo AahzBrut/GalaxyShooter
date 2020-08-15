@@ -1,11 +1,13 @@
 package galaxy.components
 
+import com.almasb.fxgl.dsl.getGameState
 import com.almasb.fxgl.dsl.spawn
 import com.almasb.fxgl.entity.SpawnData
 import com.almasb.fxgl.entity.component.Component
 import galaxy.GalaxyEntityType
 import galaxy.animations
 import galaxy.entity_data.ENEMY
+import galaxy.entity_data.PLAYER
 import galaxy.score
 
 class HealthComponent(maxHealthPoints: Int) : Component() {
@@ -25,6 +27,7 @@ class HealthComponent(maxHealthPoints: Int) : Component() {
     private fun injureEntity(health: Int) {
         if (entity.type == GalaxyEntityType.PLAYER) {
             entity.getComponent(EngineOnFireAnimationComponent::class.java).takeDamage(health)
+            getGameState().setValue("numLives", health)
         }
     }
 
@@ -33,6 +36,9 @@ class HealthComponent(maxHealthPoints: Int) : Component() {
             spawn("Explosion", SpawnData(entity.transformComponent.position)
                     .put("animation", animations["enemyExplosion"]!!))
             score(ENEMY.scoreForKill)
+        }
+        if (entity.type == GalaxyEntityType.PLAYER) {
+            getGameState().setValue("numLives", health)
         }
         entity.removeFromWorld()
     }

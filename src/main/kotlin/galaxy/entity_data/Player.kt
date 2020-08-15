@@ -21,6 +21,7 @@ data class LaserBolt(
         val damage: Int = 1,
         val speed: Double = 300.0,
         val size: Point2D = Point2D(15.0, 30.0),
+        val texture: String = "projectiles/laser.png",
         val shotSound: String = "laser_shot.wav"
 )
 
