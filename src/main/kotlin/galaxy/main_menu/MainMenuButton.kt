@@ -1,4 +1,4 @@
-package galaxy.main
+package galaxy.main_menu
 
 import com.almasb.fxgl.dsl.getUIFactoryService
 import javafx.beans.binding.Bindings

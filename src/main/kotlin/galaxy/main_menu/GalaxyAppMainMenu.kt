@@ -1,10 +1,9 @@
-package galaxy.main
+package galaxy.main_menu
 
 import com.almasb.fxgl.app.scene.FXGLMenu
 import com.almasb.fxgl.app.scene.MenuType
 import com.almasb.fxgl.dsl.FXGL
 import javafx.beans.binding.StringBinding
-import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.scene.Node
 import javafx.scene.control.Button
