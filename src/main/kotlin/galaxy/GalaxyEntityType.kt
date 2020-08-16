@@ -1,23 +1,25 @@
 package galaxy
 
-import java.util.concurrent.atomic.AtomicBoolean
-
 enum class GalaxyEntityType {
     BACKGROUND,
     PLAYER,
     LASER_BOLT,
     ENEMY,
-    EXPLOSION;
+    EXPLOSION,
+    POWER_UP;
 
     fun typeName(): String {
-        val wordStart = AtomicBoolean(true)
+        var wordStart = true
         return this.toString().fold(StringBuilder(name.length)) { acc, c ->
             when {
                 c == '_' -> {
-                    wordStart.set(true)
+                    wordStart = true
                     acc
                 }
-                wordStart.getAndSet(false) -> acc.append(c.toUpperCase())
+                wordStart -> {
+                    wordStart = false
+                    acc.append(c.toUpperCase())
+                }
                 else -> acc.append(c.toLowerCase())
             }
         }.toString()

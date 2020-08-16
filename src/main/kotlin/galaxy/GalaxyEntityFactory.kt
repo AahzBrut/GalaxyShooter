@@ -9,18 +9,11 @@ import com.almasb.fxgl.entity.components.BoundingBoxComponent
 import com.almasb.fxgl.entity.components.CollidableComponent
 import com.almasb.fxgl.physics.BoundingShape
 import com.almasb.fxgl.physics.HitBox
-import galaxy.components.EnemyMovementComponent
-import galaxy.components.EngineOnFireAnimationComponent
-import galaxy.components.ExplosionAnimationComponent
-import galaxy.components.HealthComponent
-import galaxy.components.PlayerMovementComponent
-import galaxy.components.PlayerRollAnimationComponent
-import galaxy.components.PlayerThrusterAnimationComponent
-import galaxy.components.PlayerWeaponComponent
-import galaxy.components.ProjectileComponent
+import galaxy.components.*
 import galaxy.entity_data.ENEMY
 import galaxy.entity_data.LASER_BOLT
 import galaxy.entity_data.PLAYER
+import galaxy.entity_data.POWER_UP
 import javafx.geometry.Point2D
 import javafx.scene.paint.Color
 
@@ -54,6 +47,7 @@ class GalaxyEntityFactory : EntityFactory {
                 .with(PlayerThrusterAnimationComponent())
                 .with(PlayerWeaponComponent())
                 .with(EngineOnFireAnimationComponent())
+                .with(PowerUpReceiverComponent())
                 .build()
 
         val boundingBox = player.getComponent(BoundingBoxComponent::class.java)
@@ -115,10 +109,31 @@ class GalaxyEntityFactory : EntityFactory {
     @Suppress("UNUSED")
     @Spawns("Explosion")
     fun newExplosion(data: SpawnData): Entity {
-
         return entityBuilder(data)
             .type(GalaxyEntityType.EXPLOSION)
             .with(ExplosionAnimationComponent(data.get("animation")))
             .build()
+    }
+
+    @Suppress("UNUSED")
+    @Spawns("PowerUp")
+    fun newPowerUp(data: SpawnData): Entity {
+        val powerUpType = data.get<PowerUpType>("type")
+
+        val powerUp = entityBuilder(data)
+            .type(GalaxyEntityType.POWER_UP)
+            .with(CollidableComponent(true))
+            .with(PowerUpAnimationComponent(powerUpType))
+            .build()
+
+        val boundingBox = powerUp.getComponent(BoundingBoxComponent::class.java)
+        boundingBox.addHitBox(
+            HitBox(
+                Point2D(POWER_UP.size * 2, POWER_UP.size),
+                BoundingShape.box(POWER_UP.size * 4, POWER_UP.size * 6)
+            )
+        )
+
+        return powerUp
     }
 }
