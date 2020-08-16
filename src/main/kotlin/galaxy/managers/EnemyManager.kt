@@ -1,4 +1,4 @@
-package galaxy.controllers
+package galaxy.managers
 
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.dsl.spawn

@@ -13,8 +13,9 @@ import galaxy.collision.LaserBoltToEnemyCollisionHandler
 import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
-import galaxy.controllers.EnemyManager
 import galaxy.entity_data.PLAYER
+import galaxy.managers.EnemyManager
+import galaxy.managers.PowerUpManager
 import javafx.geometry.Point2D
 import javafx.scene.image.Image
 import javafx.scene.input.KeyCode
@@ -27,6 +28,7 @@ class GalaxyApp : GameApplication() {
 
     private lateinit var player: Entity
     private lateinit var enemyManager: EnemyManager
+    private lateinit var powerUpManager: PowerUpManager
 
     override fun initSettings(settings: GameSettings) {
         with(settings) {
@@ -35,6 +37,7 @@ class GalaxyApp : GameApplication() {
             title = "Galaxy Shooter"
             version = "1.0-SNAPSHOT"
             applicationMode = ApplicationMode.DEVELOPER
+            isDeveloperMenuEnabled = true
             isMainMenuEnabled = true
             sceneFactory = GalaxySceneFactory()
         }
@@ -60,6 +63,7 @@ class GalaxyApp : GameApplication() {
         player = spawnEntityType(GalaxyEntityType.PLAYER)
         initPlayerInput()
         enemyManager = EnemyManager(newLocalTimer())
+        powerUpManager = PowerUpManager()
     }
 
     override fun initGameVars(vars: MutableMap<String, Any>) {
@@ -146,6 +150,24 @@ class GalaxyApp : GameApplication() {
             Duration.seconds(1.0),
             numberOfLives.size
         )
+
+        animations["shieldPowerUpAnim"] = Triple(
+            merge(shieldPowerUpAnim.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            shieldPowerUpAnim.size
+        )
+
+        animations["speedPowerUpAnim"] = Triple(
+            merge(speedPowerUpAnim.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            speedPowerUpAnim.size
+        )
+
+        animations["tripleShotPowerUpAnim"] = Triple(
+            merge(tripleShotPowerUpAnim.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            tripleShotPowerUpAnim.size
+        )
     }
 
     private fun initPlayerInput() {
@@ -163,6 +185,7 @@ class GalaxyApp : GameApplication() {
 
     override fun onUpdate(tpf: Double) {
         enemyManager.spawnEnemies(tpf)
+        powerUpManager.spawnPowerUp(tpf)
     }
 
     companion object {
