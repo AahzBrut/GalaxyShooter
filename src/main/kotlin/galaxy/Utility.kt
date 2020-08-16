@@ -351,3 +351,22 @@ val tripleShotPowerUpAnim = listOf(
     "power_ups/triple_shot/Powerup3_0008_00014.png",
     "power_ups/triple_shot/Powerup3_0008_00015.png"
 )
+
+val playerShieldAnim = listOf(
+    "player/shield/Shields_00000.png",
+    "player/shield/Shields_00001.png",
+    "player/shield/Shields_00002.png",
+    "player/shield/Shields_00003.png",
+    "player/shield/Shields_00004.png",
+    "player/shield/Shields_00005.png",
+    "player/shield/Shields_00006.png",
+    "player/shield/Shields_00007.png",
+    "player/shield/Shields_00008.png",
+    "player/shield/Shields_00009.png",
+    "player/shield/Shields_00010.png",
+    "player/shield/Shields_00011.png",
+    "player/shield/Shields_00012.png",
+    "player/shield/Shields_00013.png",
+    "player/shield/Shields_00014.png",
+    "player/shield/Shields_00015.png"
+)

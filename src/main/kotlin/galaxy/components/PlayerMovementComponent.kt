@@ -4,10 +4,7 @@ import com.almasb.fxgl.dsl.getAppHeight
 import com.almasb.fxgl.dsl.getAppWidth
 import com.almasb.fxgl.entity.component.Component
 import com.almasb.fxgl.input.UserAction
-import galaxy.DOWN
-import galaxy.LEFT
-import galaxy.RIGHT
-import galaxy.UP
+import galaxy.*
 import galaxy.entity_data.PLAYER
 import javafx.geometry.Point2D
 import kotlin.math.abs
@@ -31,8 +28,8 @@ class PlayerMovementComponent : Component() {
         override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
     }
 
-    private val maxSpeed: Double = PLAYER.maxSpeed
-    private val acceleration: Double = PLAYER.acceleration
+    private var maxSpeed: Double = PLAYER.maxSpeed
+    private var acceleration: Double = PLAYER.acceleration
 
     var currentDirection: Point2D = Point2D.ZERO
     private var currentVelocity: Point2D = Point2D.ZERO
@@ -53,28 +50,39 @@ class PlayerMovementComponent : Component() {
     }
 
     private fun getDecelVelocity(vel: Double, tpf: Double) =
-            if (vel > 0.0) {
-                if (vel - acceleration * tpf < 0.0)
-                    0.0
-                else
-                    vel - acceleration * tpf
-            } else {
-                if (vel + acceleration * tpf > 0.0)
-                    0.0
-                else
-                    vel + acceleration * tpf
-            }
+        if (vel > 0.0) {
+            if (vel - acceleration * tpf < 0.0)
+                0.0
+            else
+                vel - acceleration * tpf
+        } else {
+            if (vel + acceleration * tpf > 0.0)
+                0.0
+            else
+                vel + acceleration * tpf
+        }
 
     private fun getAccelVelocity(vel: Double, dir: Double, tpf: Double) =
-            if (abs(vel + dir * acceleration * tpf) < maxSpeed)
-                vel + dir * acceleration * tpf
-            else
-                sign(dir) * maxSpeed
+        if (abs(vel + dir * acceleration * tpf) < maxSpeed)
+            vel + dir * acceleration * tpf
+        else
+            sign(dir) * maxSpeed
 
     override fun onUpdate(tpf: Double) {
+        checkSpeedPowerUp()
         currentVelocity = getVelocity(tpf)
         checkBounds(currentVelocity.multiply(tpf))
         entity.translate(currentVelocity.multiply(tpf))
+    }
+
+    private fun checkSpeedPowerUp() {
+        if (entity.getComponent(PowerUpReceiverComponent::class.java).isActive(PowerUpType.SPEED)) {
+            maxSpeed = PLAYER.maxSpeed * 2
+            acceleration = PLAYER.acceleration * 2
+        } else {
+            maxSpeed = PLAYER.maxSpeed
+            acceleration = PLAYER.acceleration
+        }
     }
 
     private fun checkBounds(velocity: Point2D) {

@@ -8,7 +8,7 @@ import galaxy.PowerUpType
 import galaxy.animations
 import galaxy.entity_data.POWER_UP
 
-class PowerUpAnimationComponent(private val powerUpType: PowerUpType): Component() {
+class PowerUpAnimationComponent(val powerUpType: PowerUpType): Component() {
 
     private val speed = POWER_UP.speed
 
