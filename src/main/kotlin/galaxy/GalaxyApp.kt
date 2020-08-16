@@ -11,6 +11,7 @@ import com.almasb.fxgl.texture.Texture
 import com.almasb.fxgl.texture.merge
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
 import galaxy.collision.PlayerToEnemyCollisionHandler
+import galaxy.collision.PlayerToPowerUpCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
 import galaxy.entity_data.PLAYER
@@ -54,6 +55,7 @@ class GalaxyApp : GameApplication() {
     override fun initPhysics() {
         getPhysicsWorld().addCollisionHandler(LaserBoltToEnemyCollisionHandler())
         getPhysicsWorld().addCollisionHandler(PlayerToEnemyCollisionHandler())
+        getPhysicsWorld().addCollisionHandler(PlayerToPowerUpCollisionHandler())
     }
 
     override fun initGame() {
@@ -82,6 +84,7 @@ class GalaxyApp : GameApplication() {
         numLivesUI.y = 10.0
         numLivesUI.fitHeight = 64.0
         numLivesUI.fitWidth = 128.0
+        numLivesUI.opacity = .6
 
         addNumLivesListener(numLivesUI)
         getGameScene().addUINode(numLivesUI)
@@ -168,6 +171,12 @@ class GalaxyApp : GameApplication() {
             Duration.seconds(1.0),
             tripleShotPowerUpAnim.size
         )
+
+        animations["playerShieldAnim"] = Triple(
+            merge(playerShieldAnim.map { img -> image(img) }),
+            Duration.seconds(1.0),
+            playerShieldAnim.size
+        )
     }
 
     private fun initPlayerInput() {
@@ -194,7 +203,6 @@ class GalaxyApp : GameApplication() {
             launch(GalaxyApp::class.java, args)
         }
     }
-
 }
 
 val animations = HashMap<String, Triple<Image, Duration, Int>>()
