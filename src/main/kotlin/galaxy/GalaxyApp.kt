@@ -14,6 +14,7 @@ import galaxy.collision.PlayerToEnemyCollisionHandler
 import galaxy.collision.PlayerToPowerUpCollisionHandler
 import galaxy.components.PlayerMovementComponent
 import galaxy.components.PlayerWeaponComponent
+import galaxy.entity_data.ENEMY_SPAWN
 import galaxy.entity_data.PLAYER
 import galaxy.managers.EnemyManager
 import galaxy.managers.PowerUpManager
@@ -64,8 +65,13 @@ class GalaxyApp : GameApplication() {
         spawnEntityType(GalaxyEntityType.BACKGROUND)
         player = spawnEntityType(GalaxyEntityType.PLAYER)
         initPlayerInput()
-        enemyManager = EnemyManager(newLocalTimer())
+        initManagers()
+    }
+
+    private fun initManagers() {
+        enemyManager = EnemyManager()
         powerUpManager = PowerUpManager()
+        run(enemyManager::spawnEnemies, ENEMY_SPAWN.spawnDelay)
     }
 
     override fun initGameVars(vars: MutableMap<String, Any>) {
@@ -118,6 +124,8 @@ class GalaxyApp : GameApplication() {
                     .from(Point2D(1.0, 1.0))
                     .to(Point2D(1.2, 1.2))
                     .buildAndPlay()
+
+                powerUpManager.spawnPowerUp()
             }
         })
     }
@@ -190,11 +198,6 @@ class GalaxyApp : GameApplication() {
         input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
         input.addAction(playerMovementComponent.backThruster, KeyCode.S)
         input.addAction(weaponComponent.weaponTrigger, KeyCode.SPACE)
-    }
-
-    override fun onUpdate(tpf: Double) {
-        enemyManager.spawnEnemies(tpf)
-        powerUpManager.spawnPowerUp(tpf)
     }
 
     companion object {

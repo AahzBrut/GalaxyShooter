@@ -1,5 +1,7 @@
 package galaxy.entity_data
 
+import javafx.util.Duration
+
 data class Enemy(
         val maxHealth: Int = 1,
         val size: Double = 64.0,
@@ -14,7 +16,7 @@ data class Enemy(
 val ENEMY = Enemy()
 
 data class EnemySpawn(
-        val spawnDelay: Double = .5
+        val spawnDelay: Duration = Duration.seconds(.5)
 )
 
 val ENEMY_SPAWN = EnemySpawn()

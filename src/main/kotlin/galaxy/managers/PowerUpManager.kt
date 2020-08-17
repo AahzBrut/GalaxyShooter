@@ -13,7 +13,7 @@ class PowerUpManager {
 
     private var start = 0
 
-    fun spawnPowerUp(tpf: Double) {
+    fun spawnPowerUp() {
 
         val spawnRange = IntRange(0, (getAppWidth() - ENEMY.size).toInt())
         val powerUpType = PowerUpType.values()[(0..2).random()]
