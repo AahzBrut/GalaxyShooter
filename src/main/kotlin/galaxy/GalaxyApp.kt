@@ -116,14 +116,14 @@ class GalaxyApp : GameApplication() {
         getGameState().addListener("score", object : PropertyChangeListener<Int> {
             override fun onChange(prev: Int, now: Int) {
                 animationBuilder()
-                    .duration(Duration.seconds(0.5))
-                    .interpolator(Interpolators.BOUNCE.EASE_OUT())
-                    .repeat(2)
-                    .autoReverse(true)
-                    .scale(text)
-                    .from(Point2D(1.0, 1.0))
-                    .to(Point2D(1.2, 1.2))
-                    .buildAndPlay()
+                        .duration(Duration.seconds(0.5))
+                        .interpolator(Interpolators.BOUNCE.EASE_OUT())
+                        .repeat(2)
+                        .autoReverse(true)
+                        .scale(text)
+                        .from(Point2D(1.0, 1.0))
+                        .to(Point2D(1.2, 1.2))
+                        .buildAndPlay()
 
                 powerUpManager.spawnPowerUp()
             }
@@ -131,61 +131,22 @@ class GalaxyApp : GameApplication() {
     }
 
     private fun initAnimations() {
-
-        animations["enemyExplosion"] = Triple(
-            merge(enemyExplosionAnim.map { img -> image(img) }),
-            Duration.seconds(3.0),
-            enemyExplosionAnim.size
-        )
-
-        animations["playerRollAnim"] = Triple(
-            merge(playerRollAnim.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            playerRollAnim.size
-        )
-
-        animations["playerThrusterAnim"] = Triple(
-            merge(playerThrusterAnim.map { img -> image(img) }),
-            Duration.seconds(3.0),
-            playerThrusterAnim.size
-        )
-
-        animations["engineOnFireAnim"] = Triple(
-            merge(engineOnFireAnim.map { img -> image(img) }),
-            Duration.seconds(2.0),
-            engineOnFireAnim.size
-        )
-
-        animations["numberOfLives"] = Triple(
-            merge(numberOfLives.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            numberOfLives.size
-        )
-
-        animations["shieldPowerUpAnim"] = Triple(
-            merge(shieldPowerUpAnim.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            shieldPowerUpAnim.size
-        )
-
-        animations["speedPowerUpAnim"] = Triple(
-            merge(speedPowerUpAnim.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            speedPowerUpAnim.size
-        )
-
-        animations["tripleShotPowerUpAnim"] = Triple(
-            merge(tripleShotPowerUpAnim.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            tripleShotPowerUpAnim.size
-        )
-
-        animations["playerShieldAnim"] = Triple(
-            merge(playerShieldAnim.map { img -> image(img) }),
-            Duration.seconds(1.0),
-            playerShieldAnim.size
-        )
+        animations["enemyExplosion"] = getAnimation(enemyExplosionAnim, Duration.seconds(3.0))
+        animations["playerRollAnim"] = getAnimation(playerRollAnim, Duration.seconds(1.0))
+        animations["playerThrusterAnim"] = getAnimation(playerThrusterAnim, Duration.seconds(3.0))
+        animations["engineOnFireAnim"] = getAnimation(engineOnFireAnim, Duration.seconds(2.0))
+        animations["numberOfLives"] = getAnimation(numberOfLives, Duration.seconds(1.0))
+        animations["shieldPowerUpAnim"] = getAnimation(shieldPowerUpAnim, Duration.seconds(1.0))
+        animations["speedPowerUpAnim"] = getAnimation(speedPowerUpAnim, Duration.seconds(1.0))
+        animations["tripleShotPowerUpAnim"] = getAnimation(tripleShotPowerUpAnim, Duration.seconds(1.0))
+        animations["playerShieldAnim"] = getAnimation(playerShieldAnim, Duration.seconds(1.0))
     }
+
+    private fun getAnimation(sprites: List<String>, duration: Duration) = Triple(
+            merge(sprites.map { img -> image(img) }),
+            duration,
+            sprites.size
+    )
 
     private fun initPlayerInput() {
         val input = getInput()
