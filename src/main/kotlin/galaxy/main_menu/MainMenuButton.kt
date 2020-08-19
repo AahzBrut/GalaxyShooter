@@ -5,6 +5,7 @@ import javafx.beans.binding.Bindings
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.scene.input.KeyCode
+import javafx.scene.input.MouseButton
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
@@ -12,28 +13,23 @@ import javafx.scene.text.Text
 
 class MainMenuButton(name: String, action: EventHandler<ActionEvent>) : StackPane(){
 
-	init {
-		setOnKeyPressed { act ->
-			if (act.code === KeyCode.ENTER) {
-				action.handle(ActionEvent())
-			} }
+	private var text: Text = getUIFactoryService().newText(name, Color.WHITE, 16.0)
 
-		children.addAll(getSelector(), getTextButton(name))
+	init {
+		text.fillProperty().bind(Bindings.`when`(focusedProperty().isNotEqualTo(hoverProperty())).then(Color.WHITE).otherwise(Color.GREY))
+
+		onKeyPressed = EventHandler { act -> if (act.code === KeyCode.ENTER || act.code === KeyCode.SPACE) action.handle(ActionEvent())  }
+
+		onMousePressed = EventHandler { act -> if (act.button === MouseButton.PRIMARY) action.handle(ActionEvent()) }
+
+		children.addAll(getSelector(), text)
 	}
 
 	private fun getSelector(): Rectangle {
 		val selector = Rectangle(5.0, 15.0, Color.WHITE)
 		selector.translateX = -50.0
-		selector.visibleProperty()
-				.bind(focusedProperty())
+		selector.visibleProperty().bind(focusedProperty().isNotEqualTo(hoverProperty()))
 		isFocusTraversable = true
 		return selector
-	}
-
-	private fun getTextButton(name: String): Text {
-		val text: Text = getUIFactoryService().newText(name, Color.WHITE, 16.0)
-		text.fillProperty()
-				.bind(Bindings.`when`(focusedProperty()).then(Color.WHITE).otherwise(Color.GREY))
-		return text
 	}
 }
