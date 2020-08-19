@@ -1,38 +1,27 @@
 package galaxy
 
-import com.almasb.fxgl.dsl.getAppHeight
-import com.almasb.fxgl.dsl.getAppWidth
-import javafx.geometry.Point2D
+enum class GalaxyEntityType {
+    BACKGROUND,
+    PLAYER,
+    LASER_BOLT,
+    ENEMY,
+    EXPLOSION,
+    POWER_UP;
 
-enum class GalaxyEntityType(
-        val typeName: String,
-        val baseTexture: String,
-        val spawnPosition: Point2D
-) {
-    BACKGROUND(
-            "Background",
-            "background/SpaceBG_Overlay.png",
-            Point2D.ZERO
-
-    ),
-    PLAYER(
-            "Player",
-            "",
-            Point2D(getAppWidth().toDouble() / 2, getAppHeight().toDouble() / 2)
-    ),
-    LASER_BOLT(
-            "LaserBolt",
-            "projectiles/laser.png",
-            Point2D.ZERO
-    ),
-    ENEMY(
-            "Enemy",
-            enemyTexture,
-            Point2D.ZERO
-    ),
-    EXPLOSION(
-            "Explosion",
-            "",
-            Point2D.ZERO
-    )
+    fun typeName(): String {
+        var wordStart = true
+        return this.toString().fold(StringBuilder(name.length)) { acc, c ->
+            when {
+                c == '_' -> {
+                    wordStart = true
+                    acc
+                }
+                wordStart -> {
+                    wordStart = false
+                    acc.append(c.toUpperCase())
+                }
+                else -> acc.append(c.toLowerCase())
+            }
+        }.toString()
+    }
 }

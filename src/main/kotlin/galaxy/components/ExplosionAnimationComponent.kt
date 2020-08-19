@@ -10,7 +10,10 @@ import javafx.util.Duration
 
 class ExplosionAnimationComponent(private val animation: Triple<Image, Duration, Int>): Component() {
 
+    private var speed = 0.0
+
     override fun onAdded() {
+        speed = ENEMY.speed
         val animatedTexture = AnimatedTexture(AnimationChannel(animation.first, animation.second, animation.third))
         entity.transformComponent.scaleX = ENEMY.size / animatedTexture.height
         entity.transformComponent.scaleY = ENEMY.size / animatedTexture.height
@@ -18,6 +21,11 @@ class ExplosionAnimationComponent(private val animation: Triple<Image, Duration,
         animatedTexture.onCycleFinished = Runnable { explosionEnds() }
         animatedTexture.play()
         play(ENEMY.explosionSound)
+    }
+
+    override fun onUpdate(tpf: Double) {
+        entity.translate(0.0, speed * tpf)
+        speed *= ENEMY.explosionDrag
     }
 
     private fun explosionEnds() {

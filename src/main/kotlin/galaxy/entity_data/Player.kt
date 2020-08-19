@@ -11,6 +11,8 @@ data class Player(
         val rollSpeed: Double = .3,                             // time in seconds to fully roll in one direction
         val firingDelay: Double = .5,                           // cooldown between shots in seconds
         val mainWeaponPos: Point2D = Point2D(24.0, -20.0),
+        val weaponPos2: Point2D = Point2D(0.0, 0.0),
+        val weaponPos3: Point2D = Point2D(48.0, 0.0),
         val hitBoxScale: Double = 512.0 / 64.0
 )
 
@@ -21,6 +23,7 @@ data class LaserBolt(
         val damage: Int = 1,
         val speed: Double = 300.0,
         val size: Point2D = Point2D(15.0, 30.0),
+        val texture: String = "projectiles/laser.png",
         val shotSound: String = "laser_shot.wav"
 )
 
