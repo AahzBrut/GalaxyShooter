@@ -7,6 +7,7 @@ import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.core.collection.PropertyChangeListener
 import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.texture.Texture
 import com.almasb.fxgl.texture.merge
 import galaxy.collision.LaserBoltToEnemyCollisionHandler
@@ -45,6 +46,36 @@ class GalaxyApp : GameApplication() {
         }
     }
 
+    override fun initInput() {
+        getInput().addAction(object : UserAction("ForwardThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).forwardThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).forwardThrusterEnd() }
+        }, KeyCode.W)
+        getInput().addAction(object : UserAction("BackThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).backThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).backThrusterEnd() }
+        }, KeyCode.S)
+        getInput().addAction(object : UserAction("RightThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).rightThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).rightThrusterEnd() }
+        }, KeyCode.D)
+        getInput().addAction(object : UserAction("LeftThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).leftThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).leftThrusterEnd() }
+        }, KeyCode.A)
+        getInput().addAction(object : UserAction("WeaponTrigger") {
+            override fun onAction() = run { player.getComponent(PlayerWeaponComponent::class.java).shoot() }
+        }, KeyCode.SPACE)
+    }
+
+    override fun onUpdate(tpf: Double) {
+        if (!player.isActive) gameOver()
+    }
+
+    private fun gameOver(){
+        getDisplay().showMessageBox("Game over. Press OK to exit", ({ getGameController().gotoMainMenu()}))
+    }
+
     override fun onPreInit() {
         getSettings().globalSoundVolume = 0.2
         getSettings().globalMusicVolume = 0.5
@@ -64,7 +95,6 @@ class GalaxyApp : GameApplication() {
 
         spawnEntityType(GalaxyEntityType.BACKGROUND)
         player = spawnEntityType(GalaxyEntityType.PLAYER)
-        initPlayerInput()
         initManagers()
     }
 
@@ -147,19 +177,6 @@ class GalaxyApp : GameApplication() {
             duration,
             sprites.size
     )
-
-    private fun initPlayerInput() {
-        val input = getInput()
-        val playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
-        val weaponComponent = player.getComponent(PlayerWeaponComponent::class.java)
-
-
-        input.addAction(playerMovementComponent.forwardThruster, KeyCode.W)
-        input.addAction(playerMovementComponent.rightThruster, KeyCode.D)
-        input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
-        input.addAction(playerMovementComponent.backThruster, KeyCode.S)
-        input.addAction(weaponComponent.weaponTrigger, KeyCode.SPACE)
-    }
 
     companion object {
         @JvmStatic
