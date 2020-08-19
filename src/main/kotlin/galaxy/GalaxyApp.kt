@@ -5,20 +5,9 @@ import com.almasb.fxgl.animation.Interpolators
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.core.collection.PropertyChangeListener
-import com.almasb.fxgl.dsl.addUINode
-import com.almasb.fxgl.dsl.animationBuilder
-import com.almasb.fxgl.dsl.getAppWidth
-import com.almasb.fxgl.dsl.getGameState
-import com.almasb.fxgl.dsl.getGameWorld
-import com.almasb.fxgl.dsl.getInput
-import com.almasb.fxgl.dsl.getPhysicsWorld
-import com.almasb.fxgl.dsl.getSettings
-import com.almasb.fxgl.dsl.getUIFactoryService
-import com.almasb.fxgl.dsl.getip
-import com.almasb.fxgl.dsl.image
-import com.almasb.fxgl.dsl.loopBGM
-import com.almasb.fxgl.dsl.newLocalTimer
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.entity.Entity
+import com.almasb.fxgl.input.UserAction
 import com.almasb.fxgl.texture.merge
 import galaxy.GalaxyEntityType.BACKGROUND
 import galaxy.GalaxyEntityType.PLAYER
@@ -52,12 +41,38 @@ class GalaxyApp : GameApplication() {
         }
     }
 
+    override fun initInput() {
+        getInput().addAction(object : UserAction("ForwardThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).forwardThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).forwardThrusterEnd() }
+        }, KeyCode.W)
+        getInput().addAction(object : UserAction("BackThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).backThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).backThrusterEnd() }
+        }, KeyCode.S)
+        getInput().addAction(object : UserAction("RightThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).rightThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).rightThrusterEnd() }
+        }, KeyCode.D)
+        getInput().addAction(object : UserAction("LeftThruster") {
+            override fun onActionBegin() = run { player.getComponent(PlayerMovementComponent::class.java).leftThrusterBegin() }
+            override fun onActionEnd() = run { player.getComponent(PlayerMovementComponent::class.java).leftThrusterEnd() }
+        }, KeyCode.A)
+        getInput().addAction(object : UserAction("WeaponTrigger") {
+            override fun onAction() = run { player.getComponent(PlayerWeaponComponent::class.java).shoot() }
+        }, KeyCode.SPACE)
+    }
+
     override fun onPreInit() {
         getSettings().globalSoundVolume = 0.2
         getSettings().globalMusicVolume = 0.5
 
         loopBGM("music_background.wav")
         initAnimations()
+    }
+
+    override fun initGameVars(vars: MutableMap<String, Any>) {
+        vars["score"] = 0
     }
 
     override fun initPhysics() {
@@ -70,12 +85,7 @@ class GalaxyApp : GameApplication() {
 
         spawnEntityType(BACKGROUND)
         player = spawnEntityType(PLAYER)
-        initPlayerInput()
         enemyManager = EnemyManager(newLocalTimer())
-    }
-
-    override fun initGameVars(vars: MutableMap<String, Any>) {
-        vars["score"] = 0
     }
 
     override fun initUI() {
@@ -125,22 +135,15 @@ class GalaxyApp : GameApplication() {
                 engineOnFireAnim.size)
     }
 
-    private fun initPlayerInput() {
-        val input = getInput()
-        val playerMovementComponent = player.getComponent(PlayerMovementComponent::class.java)
-        val weaponComponent = player.getComponent(PlayerWeaponComponent::class.java)
-
-
-        input.addAction(playerMovementComponent.forwardThruster, KeyCode.W)
-        input.addAction(playerMovementComponent.rightThruster, KeyCode.D)
-        input.addAction(playerMovementComponent.leftThruster, KeyCode.A)
-        input.addAction(playerMovementComponent.backThruster, KeyCode.S)
-        input.addAction(weaponComponent.weaponTrigger, KeyCode.SPACE)
-    }
-
     override fun onUpdate(tpf: Double) {
         enemyManager.spawnEnemies(tpf)
+        if (!player.isActive) gameOver()
     }
+
+    private fun gameOver(){
+        getDisplay().showMessageBox("Game over. Press OK to exit", ({ getGameController().gotoMainMenu()}))
+    }
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {

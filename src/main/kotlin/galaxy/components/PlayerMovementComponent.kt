@@ -14,28 +14,24 @@ import kotlin.math.abs
 import kotlin.math.sign
 
 class PlayerMovementComponent : Component() {
-    val forwardThruster = object : UserAction("ForwardThruster") {
-        override fun onActionBegin() = run { currentDirection = Point2D(currentDirection.x, UP.y) }
-        override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
-    }
-    val rightThruster = object : UserAction("RightThruster") {
-        override fun onActionBegin() = run { currentDirection = Point2D(RIGHT.x, currentDirection.y) }
-        override fun onActionEnd() = run { currentDirection = Point2D(0.0, currentDirection.y) }
-    }
-    val leftThruster = object : UserAction("LeftThruster") {
-        override fun onActionBegin() = run { currentDirection = Point2D(LEFT.x, currentDirection.y) }
-        override fun onActionEnd() = run { currentDirection = Point2D(0.0, currentDirection.y) }
-    }
-    val backThruster = object : UserAction("BackThruster") {
-        override fun onActionBegin() = run { currentDirection = Point2D(currentDirection.x, DOWN.y) }
-        override fun onActionEnd() = run { currentDirection = Point2D(currentDirection.x, 0.0) }
-    }
 
     private val maxSpeed: Double = PLAYER.maxSpeed
     private val acceleration: Double = PLAYER.acceleration
+    private var currentVelocity: Point2D = Point2D.ZERO
 
     var currentDirection: Point2D = Point2D.ZERO
-    private var currentVelocity: Point2D = Point2D.ZERO
+
+    fun forwardThrusterBegin() { currentDirection = Point2D(currentDirection.x, UP.y) }
+    fun forwardThrusterEnd() { currentDirection = Point2D(currentDirection.x, 0.0) }
+
+    fun backThrusterBegin() { currentDirection = Point2D(currentDirection.x, DOWN.y) }
+    fun backThrusterEnd() { currentDirection = Point2D(currentDirection.x, 0.0) }
+
+    fun rightThrusterBegin() { currentDirection = Point2D(RIGHT.x, currentDirection.y) }
+    fun rightThrusterEnd() { currentDirection = Point2D(0.0, currentDirection.y) }
+
+    fun leftThrusterBegin() { currentDirection = Point2D(LEFT.x, currentDirection.y) }
+    fun leftThrusterEnd() { currentDirection = Point2D(0.0, currentDirection.y) }
 
     private fun getVelocity(tpf: Double): Point2D {
 

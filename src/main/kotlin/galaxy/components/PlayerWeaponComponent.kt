@@ -11,13 +11,9 @@ import javafx.util.Duration
 
 class PlayerWeaponComponent : Component() {
 
-    val weaponTrigger = object : UserAction("WeaponTrigger") {
-        override fun onAction() = run { shoot() }
-    }
-
     private val coolDownTimer = newLocalTimer()
 
-    private fun shoot(){
+    fun shoot(){
         if (entity == null || !coolDownTimer.elapsed(Duration.seconds(PLAYER.firingDelay))) return
         coolDownTimer.capture()
 

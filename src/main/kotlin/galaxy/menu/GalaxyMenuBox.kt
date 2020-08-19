@@ -1,4 +1,4 @@
-package galaxy.main
+package galaxy.menu
 
 import javafx.scene.layout.VBox
 
